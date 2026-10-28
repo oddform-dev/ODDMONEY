@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Куда бабки?</title>
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="theme-color" content="#101216">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Куда бабки?">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
+<style>
+:root{--bg:#101216;--panel:#191d24;--panel2:#202630;--text:#f3f5f7;--muted:#9aa5b3;--line:#303845;--green:#8ce0b0;--blue:#91b7ff;--amber:#f1c27d;--purple:#c6a2ff;--red:#ff8d8d}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#1c2b30 0%,transparent 40%),var(--bg);color:var(--text);font:15px/1.45 Inter,Segoe UI,Arial,sans-serif}
+.wrap{max-width:1050px;margin:auto;padding:30px 20px 48px}.top{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;margin-bottom:24px}
+.eyebrow{color:var(--green);font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:11px}
+h1{font-size:34px;line-height:1.1;margin:7px 0 8px;letter-spacing:-.04em}.sub{color:var(--muted);max-width:570px}
+.pill{border:1px solid var(--line);border-radius:99px;padding:8px 12px;color:var(--muted);font-size:12px;white-space:nowrap}
+.layout{display:grid;grid-template-columns:340px 1fr;gap:18px}.panel{background:rgba(25,29,36,.94);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 12px 35px #0002}
+h2{font-size:16px;margin:0 0 16px;letter-spacing:-.02em}.field{display:flex;flex-direction:column;gap:6px;margin:13px 0}.field label{font-size:12px;color:var(--muted)}input{width:100%;background:#11151b;color:var(--text);border:1px solid #394351;border-radius:10px;padding:12px 11px;font:inherit;outline:none}input:focus{border-color:var(--green);box-shadow:0 0 0 3px #8ce0b01c}
+.money-input{font-size:23px;font-weight:700;letter-spacing:-.03em;padding:15px}
+.smallnote{font-size:12px;color:var(--muted);margin-top:9px}.fixed{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}.summary{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:15px 0;border-bottom:1px solid var(--line)}.summary:last-child{border-bottom:0}.summary .label{color:var(--muted);font-size:13px}.summary strong{font-size:18px;font-variant-numeric:tabular-nums}.total{background:var(--panel2);border-radius:13px;padding:15px;margin-bottom:16px}.total .label{color:var(--muted);font-size:12px}.total strong{display:block;font-size:30px;letter-spacing:-.04em;margin-top:3px;font-variant-numeric:tabular-nums}.total.negative strong{color:var(--red)}
+.alloc-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:18px 0 12px}.alloc-head h2{margin:0}.sum-pct{font-size:12px;color:var(--muted)}.item{padding:14px 0;border-bottom:1px solid var(--line)}.item:last-of-type{border-bottom:0}.itemtop{display:flex;justify-content:space-between;align-items:center;gap:12px}.itemname{display:flex;align-items:center;gap:9px;font-weight:650}.dot{width:9px;height:9px;border-radius:3px;display:inline-block}.amount{font-size:18px;font-weight:750;font-variant-numeric:tabular-nums;white-space:nowrap}.subrow{display:flex;align-items:center;gap:12px;margin-top:10px}.bar{height:7px;background:#303743;border-radius:99px;overflow:hidden;flex:1}.fill{height:100%;border-radius:99px;transition:width .15s}.pct{display:flex;align-items:center;gap:4px;color:var(--muted);font-size:12px}.pct input{width:63px;padding:6px;text-align:right;font-size:13px}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}button{border:1px solid var(--line);background:#252c36;color:var(--text);border-radius:10px;padding:11px 14px;font:inherit;font-weight:650;cursor:pointer}button:hover{filter:brightness(1.12)}button.primary{background:var(--green);color:#102017;border-color:var(--green)}button.ghost{background:transparent}.warning{color:var(--red);font-size:12px;margin-top:10px;display:none}.history{margin-top:18px}.history-empty{color:var(--muted);font-size:13px}.history-row{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;border-bottom:1px solid var(--line);padding:11px 0;font-size:13px}.history-row span{color:var(--muted)}.footer{color:#74808e;font-size:11px;text-align:center;margin-top:20px}
+@media(max-width:780px){.layout{grid-template-columns:1fr}.top{display:block}.pill{display:inline-block;margin-top:12px}h1{font-size:30px}.wrap{padding:22px 14px 36px}.panel{padding:17px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div><div class="eyebrow">Личный бюджет · офлайн</div><h1>Куда бабки<span style="color:var(--green)">?</span></h1><div class="sub">Введи зарплату, закрой обязательные платежи и сразу увидишь, сколько перевести на каждый счёт. Без финансовой магии и исчезающих денег.</div></div>
+    <div class="pill">● Работает без интернета</div>
+  </header>
+  <div class="layout">
+    <section class="panel">
+      <h2>01 / Деньги на входе</h2>
+      <div class="field"><label for="salary">Полученная зарплата, ₽</label><input id="salary" class="money-input" type="number" min="0" step="100" value="80000"></div>
+      <div class="fixed">
+        <div class="field"><label for="credit">Кредит, ₽</label><input id="credit" type="number" min="0" step="100" value="5000"></div>
+        <div class="field"><label for="mortgage">Доплата по ипотеке, ₽</label><input id="mortgage" type="number" min="0" step="100" value="2000"></div>
+      </div>
+      <div class="field"><label for="other">Другие обязательные расходы, ₽</label><input id="other" type="number" min="0" step="100" value="0"></div>
+      <div class="smallnote">Сюда добавь обычный платёж по ипотеке, коммуналку и другие обязательные списания, если они идут из этой зарплаты.</div>
+      <div class="actions"><button class="primary" id="saveBtn">Сохранить распределение</button><button class="ghost" id="resetBtn">Сбросить</button></div>
+      <div class="warning" id="warning"></div>
+    </section>
+    <section class="panel">
+      <h2>02 / Куда отправить</h2>
+      <div class="total" id="totalBox"><div class="label">Остаток после обязательных платежей</div><strong id="remaining">73 000 ₽</strong></div>
+      <div class="alloc-head"><h2>Распределение остатка</h2><div class="sum-pct">Всего: <b id="pctTotal">100%</b></div></div>
+      <div id="allocations"></div>
+      <div class="summary"><div><div class="label">Обязательные платежи</div><div style="font-size:11px;color:var(--muted)">Кредит + ипотека + прочее</div></div><strong id="fixedTotal">7 000 ₽</strong></div>
+      <div class="summary"><div><div class="label">Проверка суммы</div><div style="font-size:11px;color:var(--muted)" id="checkText">Всё распределено</div></div><strong id="checkAmount">73 000 ₽</strong></div>
+      <div class="actions"><button id="copyBtn">Скопировать план</button><button id="csvBtn" class="ghost">Экспорт истории CSV</button></div>
+      <div class="history">
+        <div class="alloc-head"><h2>История распределений</h2><button class="ghost" id="clearHistory" style="padding:6px 9px;font-size:12px">Очистить</button></div>
+        <div id="historyList" class="history-empty">Пока нет сохранённых распределений.</div>
+      </div>
+    </section>
+  </div>
+  <div class="footer">Данные сохраняются только в этом браузере на этом устройстве. Экспортируй историю, если хочешь иметь резервную копию.</div>
+</div>
+<script>
+const defaults = {
+ salary:80000, credit:5000, mortgage:2000, other:0,
+ allocations:[
+  {id:'family',name:'Жене и на семью',pct:30,color:'#91b7ff'},
+  {id:'personal',name:'Себе на жизнь',pct:25,color:'#f1c27d'},
+  {id:'savings',name:'В накопления',pct:30,color:'#8ce0b0'},
+  {id:'goals',name:'На цели',pct:15,color:'#c6a2ff'}
+ ]
+};
+let state = structuredClone(defaults);
+let history = [];
+const $ = id => document.getElementById(id);
+const money = n => Math.round(n).toLocaleString('ru-RU') + ' ₽';
+const num = id => Math.max(0, Number($(id).value) || 0);
+function load(){
+ try { const s=JSON.parse(localStorage.getItem('kudaBabkiState')); if(s) state={...defaults,...s}; } catch(e){}
+ try { history=JSON.parse(localStorage.getItem('kudaBabkiHistory')||'[]'); } catch(e){history=[]}
+ ['salary','credit','mortgage','other'].forEach(k=>$(k).value=state[k] ?? defaults[k]);
+ render();
+}
+function remaining(){return num('salary')-num('credit')-num('mortgage')-num('other')}
+function persist(){localStorage.setItem('kudaBabkiState',JSON.stringify(state));localStorage.setItem('kudaBabkiHistory',JSON.stringify(history))}
+function render(){
+ ['salary','credit','mortgage','other'].forEach(k=>state[k]=num(k));
+ const rem=remaining(), fixed=num('credit')+num('mortgage')+num('other');
+ $('remaining').textContent=money(rem); $('fixedTotal').textContent=money(fixed);
+ $('totalBox').classList.toggle('negative',rem<0);
+ const pct=state.allocations.reduce((s,a)=>s+Math.max(0,Number(a.pct)||0),0);
+ $('pctTotal').textContent=pct+'%'; $('pctTotal').style.color=pct===100?'var(--green)':'var(--red)';
+ $('allocations').innerHTML=state.allocations.map(a=>{
+  const p=Math.max(0,Number(a.pct)||0), amount=Math.max(0,rem)*p/100;
+  return `<div class="item"><div class="itemtop"><div class="itemname"><i class="dot" style="background:${a.color}"></i>${a.name}</div><div class="amount">${money(amount)}</div></div><div class="subrow"><div class="bar"><div class="fill" style="width:${Math.min(100,p)}%;background:${a.color}"></div></div><label class="pct"><input aria-label="Процент ${a.name}" data-pct="${a.id}" type="number" min="0" max="100" step="1" value="${p}"> %</label></div></div>`
+ }).join('');
+ const valid=rem>=0 && pct===100;
+ $('warning').style.display=rem<0||pct!==100?'block':'none';
+ $('warning').textContent=rem<0?'Обязательные платежи больше зарплаты. Проверь суммы.':pct!==100?'Проценты должны в сумме составлять ровно 100%.':'';
+ $('checkText').textContent=valid?'Всё распределено':'Проверь суммы и проценты';
+ $('checkAmount').textContent=money(Math.max(0,rem)); $('checkAmount').style.color=valid?'var(--green)':'var(--red)';
+ $('saveBtn').disabled=!valid; $('saveBtn').style.opacity=valid?'1':'.45';
+ renderHistory();
+}
+$('allocations').addEventListener('change',e=>{
+ const id=e.target.dataset.pct;if(!id)return;
+ const a=state.allocations.find(x=>x.id===id); if(a){a.pct=Math.max(0,Math.min(100,Number(e.target.value)||0));render();}
+});
+['salary','credit','mortgage','other'].forEach(k=>$(k).addEventListener('input',render));
+$('saveBtn').addEventListener('click',()=>{
+ const rem=remaining(); if(rem<0||state.allocations.reduce((s,a)=>s+a.pct,0)!==100)return;
+ const record={date:new Date().toLocaleDateString('ru-RU'),salary:num('salary'),fixed:num('credit')+num('mortgage')+num('other'),remaining:rem,items:state.allocations.map(a=>({name:a.name,pct:a.pct,amount:Math.round(rem*a.pct/100)}))};
+ history.unshift(record);history=history.slice(0,100);persist();renderHistory();
+ $('saveBtn').textContent='Сохранено ✓';setTimeout(()=>$('saveBtn').textContent='Сохранить распределение',1300);
+});
+function renderHistory(){
+ if(!history.length){$('historyList').className='history-empty';$('historyList').textContent='Пока нет сохранённых распределений.';return}
+ $('historyList').className='';
+ $('historyList').innerHTML=history.slice(0,8).map((h,i)=>`<div class="history-row"><div><b>${h.date}</b><br><span>Зарплата ${money(h.salary)}</span></div><div><b>${money(h.remaining)}</b><br><span>к распределению</span></div><button class="ghost" data-remove="${i}" style="padding:5px 8px">×</button></div>`).join('');
+}
+$('historyList').addEventListener('click',e=>{const i=e.target.dataset.remove;if(i!==undefined){history.splice(Number(i),1);persist();renderHistory()}});
+$('clearHistory').addEventListener('click',()=>{if(confirm('Удалить всю историю распределений?')){history=[];persist();renderHistory()}});
+$('resetBtn').addEventListener('click',()=>{if(confirm('Сбросить суммы и проценты к исходным значениям?')){state=structuredClone(defaults);['salary','credit','mortgage','other'].forEach(k=>$(k).value=state[k]);persist();render()}});
+$('copyBtn').addEventListener('click',async()=>{
+ const rem=remaining();const lines=['Куда бабки? — план распределения',`Зарплата: ${money(num('salary'))}`,`Обязательные платежи: ${money(num('credit')+num('mortgage')+num('other'))}`,`Остаток: ${money(rem)}`,'',...state.allocations.map(a=>`${a.name}: ${money(Math.max(0,rem)*a.pct/100)} (${a.pct}%)`)];
+ const text=lines.join('\n');
+ try{await navigator.clipboard.writeText(text);$('copyBtn').textContent='Скопировано ✓';setTimeout(()=>$('copyBtn').textContent='Скопировать план',1300)}catch(e){prompt('Скопируй план:',text)}
+});
+$('csvBtn').addEventListener('click',()=>{
+ const rows=[['Дата','Зарплата','Обязательные платежи','Остаток','Категория','Процент','Сумма']];
+ history.forEach(h=>h.items.forEach(i=>rows.push([h.date,h.salary,h.fixed,h.remaining,i.name,i.pct,i.amount])));
+ const csv='\uFEFF'+rows.map(r=>r.map(v=>'"'+String(v).replaceAll('"','""')+'"').join(';')).join('\r\n');
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));a.download='kuda-babki-history.csv';a.click();URL.revokeObjectURL(a.href);
+});
+load();
+</script>
+<script>
+if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(err => console.warn('SW registration failed:', err));
+  });
+}
+</script>
+</body>
+</html>
