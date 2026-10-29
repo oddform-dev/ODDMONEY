@@ -87,7 +87,7 @@
 
 ## Как пользоваться
 
-1. Откройте **[Куда бабки?](https://anrbnk.github.io/kuda-babki/)**.
+1. Откройте **[Куда бабки?](https://oddform-dev.github.io/kuda-babki/)**.
 2. Выберите вкладку «Основная зарплата» или «Аванс».
 3. Введите сумму выплаты и, для основной зарплаты, обязательные расходы.
 4. При необходимости измените проценты распределения.
@@ -107,7 +107,7 @@
 
 1. Скачайте репозиторий или клонируйте его:
    ```bash
-   git clone https://github.com/anrbnk/kuda-babki.git
+   git clone https://github.com/oddform-dev/kuda-babki.git
    cd kuda-babki
    ```
 2. Откройте `index.html` в браузере для базовой проверки.
@@ -135,7 +135,7 @@ python -m http.server 8000
 
 ## Обратная связь
 
-Нашли ошибку или есть идея для улучшения? [Создайте issue](https://github.com/anrbnk/kuda-babki/issues) в репозитории.
+Нашли ошибку или есть идея для улучшения? [Создайте issue](https://github.com/oddform-dev/kuda-babki/issues) в репозитории.
 
 Если хотите предложить изменение, сделайте fork, создайте ветку и откройте pull request с кратким описанием того, что изменилось.
 
