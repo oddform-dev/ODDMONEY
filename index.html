@@ -870,6 +870,60 @@ body.dark-theme .alloc-head .sum-pct b{
   #advanceView .total:after{width:60px !important;height:60px !important;right:22px !important;top:20px !important}
 }
 
+
+/* Mobile readability: solid theme-aware balance cards, no text over decoration */
+@media(max-width:600px){
+  #totalBox,
+  #advanceView .total{
+    height:auto !important;
+    min-height:122px !important;
+    padding:20px 18px !important;
+    gap:10px !important;
+  }
+  #totalBox .label,
+  #advanceView .total .label{
+    max-width:100% !important;
+    width:100%;
+    font-size:10px !important;
+    line-height:1.45 !important;
+    letter-spacing:.075em !important;
+    overflow-wrap:normal !important;
+    word-break:normal !important;
+    color:#777081 !important;
+  }
+  #totalBox strong,
+  #advanceView .total strong{
+    max-width:100% !important;
+    width:100%;
+    font-size:clamp(30px,8vw,36px) !important;
+    line-height:1.1 !important;
+    letter-spacing:-.045em !important;
+    color:#211b2b !important;
+  }
+  #totalBox:before,
+  #advanceView .total:before,
+  #totalBox:after,
+  #advanceView .total:after{
+    display:none !important;
+  }
+  body:not(.dark-theme) #totalBox,
+  body:not(.dark-theme) #advanceView .total{
+    background:linear-gradient(115deg,#ffffff 0%,#fbf8ff 100%) !important;
+    border:1px solid #e9e1f0 !important;
+    box-shadow:0 8px 24px #26182f0d !important;
+  }
+  body.dark-theme #totalBox,
+  body.dark-theme #advanceView .total{
+    background:linear-gradient(115deg,#211b2b 0%,#292033 100%) !important;
+    border:1px solid #3b3348 !important;
+    box-shadow:none !important;
+  }
+  body.dark-theme #totalBox .label,
+  body.dark-theme #advanceView .total .label{color:#d5ccdf !important}
+  body.dark-theme #totalBox strong,
+  body.dark-theme #advanceView .total strong{color:#fff !important}
+}
+
 </style>
 </head>
 <body>
