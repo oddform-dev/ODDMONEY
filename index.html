@@ -1199,12 +1199,34 @@ body.dark-theme #salaryView .history-row,body.dark-theme #advanceView .history-r
  #salaryView .history-row span,#advanceView .history-row span{font-size:9px}
 }
 
+
+/* Compact mobile header: keep branding, remove excess vertical whitespace */
+@media(max-width:780px){
+  .wrap{padding-top:18px !important}
+  .top{display:flex !important;flex-direction:column;align-items:stretch !important;gap:12px !important;margin-bottom:18px !important}
+  .top>div:first-child{min-width:0}
+  .eyebrow{font-size:9px !important;letter-spacing:.12em !important;gap:6px !important}
+  .eyebrow:before{width:14px !important}
+  h1{font-size:clamp(32px,9vw,42px) !important;line-height:1 !important;margin:9px 0 8px !important;letter-spacing:-.065em !important}
+  .sub{font-size:13px !important;line-height:1.5 !important;max-width:100% !important;color:var(--muted) !important}
+  .top-actions{display:flex !important;flex-direction:row !important;align-items:center !important;justify-content:flex-start !important;gap:8px !important;margin-top:2px}
+  .theme-toggle{width:40px !important;height:40px !important;min-width:40px !important;padding:0 !important;display:flex;align-items:center;justify-content:center;border-radius:50% !important}
+  .theme-icon{font-size:20px !important}
+  .top-actions .pill{display:inline-flex !important;align-items:center;margin:0 !important;padding:8px 11px !important;font-size:11px !important;line-height:1.2 !important;white-space:nowrap}
+}
+@media(max-width:380px){
+  .eyebrow{font-size:8px !important;letter-spacing:.09em !important}
+  h1{font-size:31px !important}
+  .sub{font-size:12px !important;line-height:1.45 !important}
+  .top-actions .pill{font-size:10px !important;padding:7px 9px !important}
+}
+
 </style>
 </head>
 <body>
 <div class="wrap">
   <header class="top">
-    <div><div class="eyebrow">ODDFORM · PERSONAL FINANCE</div><h1>ODDMONEY<span style="color:var(--green)">.</span></h1><div class="sub">Распределяй доход, учитывай обязательные платежи и двигайся к финансовым целям. Настрой бюджет под себя: добавляй, переименовывай и удаляй категории.</div></div>
+    <div><div class="eyebrow">ODDFORM · PERSONAL FINANCE</div><h1>ODDMONEY<span style="color:var(--green)">.</span></h1><div class="sub">Распределяй доход, учитывай обязательные платежи и копи на цели. Настраивай категории под себя.</div></div>
     <div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Включить тёмную тему" title="Сменить тему"><span class="theme-icon" aria-hidden="true">☾</span></button><div class="pill">● Работает без интернета</div></div>
   </header>
   <nav class="tabs" aria-label="Тип выплаты">
