@@ -826,6 +826,50 @@ body.dark-theme .alloc-head .sum-pct b{
   color:#f078d0 !important;
 }
 
+
+/* Keep balance-card text clear of the decorative gradient */
+#totalBox:before,
+#advanceView .total:before{
+  z-index:0 !important;
+  width:190px !important;
+  height:190px !important;
+  right:-22px !important;
+  top:-54px !important;
+}
+#totalBox:after,
+#advanceView .total:after{
+  z-index:0 !important;
+  width:76px !important;
+  height:76px !important;
+  right:38px !important;
+  top:18px !important;
+}
+#totalBox .label,
+#advanceView .total .label{
+  z-index:2 !important;
+  position:relative !important;
+  display:block;
+  max-width:65%;
+  overflow-wrap:anywhere;
+}
+#totalBox strong,
+#advanceView .total strong{
+  z-index:2 !important;
+  position:relative !important;
+  display:block;
+  max-width:65%;
+}
+@media(max-width:600px){
+  #totalBox .label,
+  #advanceView .total .label,
+  #totalBox strong,
+  #advanceView .total strong{max-width:72%}
+  #totalBox:before,
+  #advanceView .total:before{width:150px !important;height:150px !important;right:-30px !important;top:-25px !important}
+  #totalBox:after,
+  #advanceView .total:after{width:60px !important;height:60px !important;right:22px !important;top:20px !important}
+}
+
 </style>
 </head>
 <body>
