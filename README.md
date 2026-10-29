@@ -28,6 +28,38 @@
 - **Устанавливается:** работает как PWA на компьютере и смартфоне.
 - **Офлайн:** после первой загрузки может открываться без подключения к интернету.
 
+## Скриншоты интерфейса
+
+<p align="center">
+  <strong>Основной доход</strong>
+</p>
+
+<table>
+  <tr>
+    <th width="50%">Светлая тема</th>
+    <th width="50%">Тёмная тема</th>
+  </tr>
+  <tr>
+    <td align="center"><img src="screenshots/main-light.png" alt="ODDMONEY — основной доход, светлая тема" width="100%"></td>
+    <td align="center"><img src="screenshots/main-dark.png" alt="ODDMONEY — основной доход, тёмная тема" width="100%"></td>
+  </tr>
+</table>
+
+<p align="center">
+  <strong>Дополнительный доход</strong>
+</p>
+
+<table>
+  <tr>
+    <th width="50%">Светлая тема</th>
+    <th width="50%">Тёмная тема</th>
+  </tr>
+  <tr>
+    <td align="center"><img src="screenshots/additional-light.png" alt="ODDMONEY — дополнительный доход, светлая тема" width="100%"></td>
+    <td align="center"><img src="screenshots/additional-dark.png" alt="ODDMONEY — дополнительный доход, тёмная тема" width="100%"></td>
+  </tr>
+</table>
+
 ## Последнее обновление интерфейса
 
 - Единые вкладки «Основной доход» и «Дополнительный».
