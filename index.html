@@ -70,7 +70,7 @@ h2{font-size:16px;margin:0 0 16px;letter-spacing:-.02em}.field{display:flex;flex
       <section class="panel">
         <h2>01 / Аванс</h2>
         <div class="field"><label for="advanceAmount">Полученный аванс, ₽</label><input id="advanceAmount" class="money-input" type="number" min="0" step="100" value="25000"></div>
-        <div class="smallnote">Вводи фактически полученную сумму: аванс зависит от отработанных часов. Из него не вычитаются ипотека и кредиты, а также не пополняются счета дочери, ремонта и больших трат.</div>
+        <div class="smallnote">Введи фактически полученную сумму аванса. Схема аванса независима от основной зарплаты и использует собственные категории.</div>
         <div class="actions"><button class="primary" id="saveAdvanceBtn">Сохранить аванс</button><button class="ghost" id="resetAdvanceBtn">Сбросить проценты</button></div>
         <div class="warning" id="advanceWarning"></div>
       </section>
@@ -337,7 +337,7 @@ $('saveAdvanceBtn').addEventListener('click',()=>{
  $('saveAdvanceBtn').textContent='Сохранено ✓';setTimeout(()=>$('saveAdvanceBtn').textContent='Сохранить аванс',1300);
 });
 $('resetAdvanceBtn').addEventListener('click',()=>{
- if(confirm('Вернуть проценты аванса к 45 / 20 / 20 / 15?')){advanceAllocations=structuredClone(advanceDefaults);persistAdvance();renderAdvance();}
+ if(confirm('Вернуть категории аванса к стартовым настройкам?')){advanceAllocations=structuredClone(advanceDefaults);persistAdvance();renderAdvance();}
 });
 function renderAdvanceHistory(){
  renderStats();
@@ -354,7 +354,7 @@ $('clearAdvanceHistory').addEventListener('click',()=>{
 });
 $('copyAdvanceBtn').addEventListener('click',async()=>{
  const amount=Math.max(0,Number($('advanceAmount').value)||0);
- const lines=['Куда бабки? — распределение аванса',`Аванс: ${money(amount)}`,'',...advanceAllocations.map(a=>`${a.name}: ${money(amount*a.pct/100)} (${a.pct}%)`),'','Из аванса не оплачиваются ипотека и кредиты; не пополняются счета дочери, ремонта и больших трат.'];
+ const lines=['Куда бабки? — распределение аванса',`Аванс: ${money(amount)}`,'',...advanceAllocations.map(a=>`${a.name}: ${money(amount*a.pct/100)} (${a.pct}%)`)];
  const txt=lines.join('\n');
  try{await navigator.clipboard.writeText(txt);$('copyAdvanceBtn').textContent='Скопировано ✓';setTimeout(()=>$('copyAdvanceBtn').textContent='Скопировать план аванса',1300)}catch(e){prompt('Скопируй план:',txt)}
 });
