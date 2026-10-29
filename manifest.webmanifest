@@ -1,8 +1,8 @@
 {
   "id": "./",
-  "name": "Куда бабки? — бюджет",
-  "short_name": "Куда бабки",
-  "description": "Личный калькулятор распределения зарплаты и накоплений",
+  "name": "ODDMONEY — personal finance",
+  "short_name": "ODDMONEY",
+  "description": "Личный бюджет, распределение дохода и накопления",
   "lang": "ru-RU",
   "start_url": "./",
   "scope": "./",
