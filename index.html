@@ -893,7 +893,7 @@ body.dark-theme .alloc-head .sum-pct b{
         <div class="field"><label for="mortgage">Ипотечный резерв, ₽</label><input id="mortgage" type="number" min="0" step="100" value="2000"></div>
       </div>
       <div class="field"><label for="other">Другие обязательные расходы, ₽</label><input id="other" type="number" min="0" step="100" value="0"></div>
-      <div class="smallnote">Сюда добавь обычный платёж по ипотеке, коммуналку и другие обязательные списания, если они идут из этой зарплаты.</div>
+      <div class="smallnote">Сюда добавь обычный платёж по ипотеке, коммуналку и другие обязательные списания, если они идут из основного дохода.</div>
       <div class="actions"><button class="primary" id="saveBtn">Сохранить распределение</button><button class="ghost" id="resetBtn">Сбросить</button></div>
       </div></details>
       <div class="warning" id="warning"></div>
@@ -902,7 +902,7 @@ body.dark-theme .alloc-head .sum-pct b{
       <h2>02 / Распределения дохода</h2>
       <div class="total" id="totalBox"><div class="label">Остаток после обязательных платежей</div><strong id="remaining">73 000 ₽</strong></div>
       <div class="alloc-head"><h2>Распределение по категориям</h2><div class="sum-pct">Всего: <b id="pctTotal">100%</b></div></div>
-      <div class="donut-wrap"><div class="donut" id="salaryDonut" role="img" aria-label="Диаграмма распределения зарплаты"></div><div class="donut-legend" id="salaryLegend"></div></div>
+      <div class="donut-wrap"><div class="donut" id="salaryDonut" role="img" aria-label="Диаграмма распределения основного дохода"></div><div class="donut-legend" id="salaryLegend"></div></div>
       <details class="allocation-collapse" id="salaryAccounts"><summary class="allocation-toggle"><span>Счета и категории</span><span class="allocation-toggle-meta">Настроить названия и проценты</span><span class="toggle-icon" aria-hidden="true"></span></summary><div class="allocation-content"><div id="allocations"></div><div class="actions"><button id="addCategoryBtn" class="ghost" type="button">＋ Добавить категорию</button><button id="balanceCategoriesBtn" class="ghost" type="button">Распределить поровну</button></div></div></details>
       <div class="summary"><div><div class="label">Обязательные платежи</div><div style="font-size:11px;color:var(--muted)">Кредит + ипотека + прочее</div></div><strong id="fixedTotal">7 000 ₽</strong></div>
       <div class="summary"><div><div class="label">Проверка суммы</div><div style="font-size:11px;color:var(--muted)" id="checkText">Всё распределено</div></div><strong id="checkAmount">73 000 ₽</strong></div>
@@ -927,10 +927,10 @@ body.dark-theme .alloc-head .sum-pct b{
         <h2>02 / Распределение дополнительного дохода</h2>
         <div class="total"><div class="label">Весь дополнительный доход к распределению</div><strong id="advanceRemaining">25 000 ₽</strong></div>
         <div class="alloc-head"><h2>Распределение по категориям</h2><div class="sum-pct">Всего: <b id="advancePctTotal">100%</b></div></div>
-        <div class="donut-wrap"><div class="donut" id="advanceDonut" role="img" aria-label="Диаграмма распределения аванса"></div><div class="donut-legend" id="advanceLegend"></div></div>
+        <div class="donut-wrap"><div class="donut" id="advanceDonut" role="img" aria-label="Диаграмма распределения дополнительного дохода"></div><div class="donut-legend" id="advanceLegend"></div></div>
         <details class="allocation-collapse" id="advanceAccounts"><summary class="allocation-toggle"><span>Счета и категории</span><span class="allocation-toggle-meta">Настроить названия и проценты</span><span class="toggle-icon" aria-hidden="true"></span></summary><div class="allocation-content"><div id="advanceAllocations"></div><div class="actions"><button id="addAdvanceCategoryBtn" class="ghost" type="button">＋ Добавить категорию</button><button id="balanceAdvanceCategoriesBtn" class="ghost" type="button">Распределить поровну</button></div></div></details>
         <div class="summary"><div><div class="label">Останется нераспределённым</div><div style="font-size:11px;color:var(--muted)">Если проценты не составляют 100%</div></div><strong id="advanceUnallocated">0 ₽</strong></div>
-        <details class="income-collapse" id="advanceHistoryDetails"><summary class="income-toggle"><span>История авансов</span><span class="allocation-toggle-meta">Сохранённые распределения</span><span class="toggle-icon" aria-hidden="true"></span></summary><div class="income-content"><div class="actions" style="margin-top:12px"><button class="ghost" id="clearAdvanceHistory" style="padding:6px 9px;font-size:12px">Очистить историю</button></div><div id="advanceHistoryList" class="history-empty">Пока нет сохранённых авансов.</div></div></details>
+        <details class="income-collapse" id="advanceHistoryDetails"><summary class="income-toggle"><span>История дополнительного дохода</span><span class="allocation-toggle-meta">Сохранённые распределения</span><span class="toggle-icon" aria-hidden="true"></span></summary><div class="income-content"><div class="actions" style="margin-top:12px"><button class="ghost" id="clearAdvanceHistory" style="padding:6px 9px;font-size:12px">Очистить историю</button></div><div id="advanceHistoryList" class="history-empty">Пока нет сохранённых записей дополнительного дохода.</div></div></details>
         <div class="actions"><button id="copyAdvanceBtn">Скопировать план дохода</button></div>
       </section>
     </div>
@@ -954,10 +954,10 @@ body.dark-theme .alloc-head .sum-pct b{
     <details class="panel collapsible">
       <summary class="section-toggle"><span><span class="section-number">04</span><span class="section-title">Статистика</span><span class="section-hint">Итоги сохранённых выплат</span></span><span class="toggle-icon" aria-hidden="true"></span></summary>
       <div class="section-content">
-      <div class="summary"><div class="label">Сохранено распределений зарплаты</div><strong id="salaryHistoryCount">0</strong></div>
-      <div class="summary"><div class="label">Сумма зарплат в истории</div><strong id="salaryHistoryTotal">0 ₽</strong></div>
-      <div class="summary"><div class="label">Сохранено авансов</div><strong id="advanceHistoryCount">0</strong></div>
-      <div class="summary"><div class="label">Сумма авансов в истории</div><strong id="advanceHistoryTotal">0 ₽</strong></div>
+      <div class="summary"><div class="label">Сохранено распределений основного дохода</div><strong id="salaryHistoryCount">0</strong></div>
+      <div class="summary"><div class="label">Сумма основного дохода в истории</div><strong id="salaryHistoryTotal">0 ₽</strong></div>
+      <div class="summary"><div class="label">Сохранено распределений дополнительного дохода</div><strong id="advanceHistoryCount">0</strong></div>
+      <div class="summary"><div class="label">Сумма дополнительного дохода в истории</div><strong id="advanceHistoryTotal">0 ₽</strong></div>
       <div class="smallnote" id="monthlySummary">Сохраняй распределения, чтобы собирать статистику.</div>
       </div>
     </details>
@@ -1028,7 +1028,7 @@ function renderStats(){
  const now=new Date(),month=now.getMonth(),year=now.getFullYear();
  const inMonth=arr=>arr.filter(h=>{const parts=String(h.date||'').split('.');return parts.length===3&&Number(parts[1])===month+1&&Number(parts[2])===year;});
  const mSalary=inMonth(history).reduce((sum,h)=>sum+(Number(h.salary)||0),0),mAdvance=inMonth(advanceHistory).reduce((sum,h)=>sum+(Number(h.amount)||0),0);
- $('monthlySummary').textContent=`За текущий месяц в истории: зарплата ${money(mSalary)}, авансы ${money(mAdvance)}. Считаются только сохранённые записи.`;
+ $('monthlySummary').textContent=`За текущий месяц в истории: основной доход ${money(mSalary)}, дополнительный доход ${money(mAdvance)}. Считаются только сохранённые записи.`;
 }
 function exportBackup(){
  const keys=Object.keys(localStorage).filter(k=>k.startsWith('kudaBabki'));
@@ -1074,7 +1074,7 @@ function render(){
  }).join('');
  const valid=rem>=0 && pct===100;
  $('warning').style.display=rem<0||pct!==100?'block':'none';
- $('warning').textContent=rem<0?'Обязательные платежи больше зарплаты. Проверь суммы.':pct!==100?'Проценты счетов должны в сумме составлять ровно 100%.':'';
+ $('warning').textContent=rem<0?'Обязательные платежи больше зарплаты. Проверь суммы.':pct!==100?'Проценты категорий должны в сумме составлять ровно 100%.':'';
  $('checkText').textContent=valid?'Процентные счета распределены':'Проверь суммы и проценты';
  $('checkAmount').textContent=money(allocatable); $('checkAmount').style.color=valid?'var(--green)':'var(--red)';
  $('saveBtn').disabled=!valid; $('saveBtn').style.opacity=valid?'1':'.45';
@@ -1104,18 +1104,18 @@ function renderHistory(){
  renderStats();
  if(!history.length){$('historyList').className='history-empty';$('historyList').textContent='Пока нет сохранённых распределений.';return}
  $('historyList').className='';
- $('historyList').innerHTML=history.slice(0,8).map((h,i)=>`<div class="history-row"><div><b>${h.date}</b><br><span>Зарплата ${money(h.salary)}</span></div><div><b>${money(h.remaining)}</b><br><span>к распределению</span></div><button class="ghost" data-remove="${i}" style="padding:5px 8px">×</button></div>`).join('');
+ $('historyList').innerHTML=history.slice(0,8).map((h,i)=>`<div class="history-row"><div><b>${h.date}</b><br><span>Основной доход ${money(h.salary)}</span></div><div><b>${money(h.remaining)}</b><br><span>к распределению</span></div><button class="ghost" data-remove="${i}" style="padding:5px 8px">×</button></div>`).join('');
 }
 $('historyList').addEventListener('click',e=>{const i=e.target.dataset.remove;if(i!==undefined){history.splice(Number(i),1);persist();renderHistory()}});
 $('clearHistory').addEventListener('click',()=>{if(confirm('Удалить всю историю распределений?')){history=[];persist();renderHistory()}});
 $('resetBtn').addEventListener('click',()=>{if(confirm('Сбросить суммы и проценты к исходным значениям?')){state=structuredClone(defaults);['salary','credit','mortgage','other'].forEach(k=>$(k).value=state[k]);persist();render()}});
 $('copyBtn').addEventListener('click',async()=>{
- const rem=remaining();const lines=['Куда бабки? — план распределения',`Зарплата: ${money(num('salary'))}`,`Обязательные платежи: ${money(num('credit')+num('mortgage')+num('other'))}`,`Остаток: ${money(rem)}`,'',...state.allocations.map(a=>`${a.name}: ${money(Math.max(0,rem)*a.pct/100)} (${a.pct}%)`)];
+ const rem=remaining();const lines=['Куда бабки? — план распределения',`Основной доход: ${money(num('salary'))}`,`Обязательные платежи: ${money(num('credit')+num('mortgage')+num('other'))}`,`Остаток: ${money(rem)}`,'',...state.allocations.map(a=>`${a.name}: ${money(Math.max(0,rem)*a.pct/100)} (${a.pct}%)`)];
  const text=lines.join('\n');
  try{await navigator.clipboard.writeText(text);$('copyBtn').textContent='Скопировано ✓';setTimeout(()=>$('copyBtn').textContent='Скопировать план',1300)}catch(e){prompt('Скопируй план:',text)}
 });
 $('csvBtn').addEventListener('click',()=>{
- const rows=[['Дата','Зарплата','Обязательные платежи','Остаток','Категория','Процент','Сумма']];
+ const rows=[['Дата','Основной доход','Обязательные платежи','Остаток','Категория','Процент','Сумма']];
  history.forEach(h=>h.items.forEach(i=>rows.push([h.date,h.salary,h.fixed,h.remaining,i.name,i.pct,i.amount])));
  const csv='\uFEFF'+rows.map(r=>r.map(v=>'"'+String(v).replaceAll('"','""')+'"').join(';')).join('\r\n');
  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));a.download='kuda-babki-history.csv';a.click();URL.revokeObjectURL(a.href);
@@ -1151,7 +1151,7 @@ function renderAdvance(){
  $('advanceUnallocated').textContent=money(amount*Math.max(0,100-pct)/100);
  const valid=pct===100;
  $('advanceWarning').style.display=valid?'none':'block';
- $('advanceWarning').textContent=valid?'':'Проценты аванса должны в сумме составлять ровно 100%.';
+ $('advanceWarning').textContent=valid?'':'Проценты категорий должны в сумме составлять ровно 100%.';
  $('saveAdvanceBtn').disabled=!valid;
  $('saveAdvanceBtn').style.opacity=valid?'1':'.45';
  renderAdvanceHistory();
@@ -1186,7 +1186,7 @@ $('saveAdvanceBtn').addEventListener('click',()=>{
  const amount=Math.max(0,Number($('advanceAmount').value)||0);
  advanceHistory.unshift({date:new Date().toLocaleDateString('ru-RU'),amount,items:advanceAllocations.map(a=>({name:a.name,pct:a.pct,amount:Math.round(amount*a.pct/100)}))});
  advanceHistory=advanceHistory.slice(0,100);persistAdvance();renderAdvanceHistory();
- $('saveAdvanceBtn').textContent='Сохранено ✓';setTimeout(()=>$('saveAdvanceBtn').textContent='Сохранить аванс',1300);
+ $('saveAdvanceBtn').textContent='Сохранено ✓';setTimeout(()=>$('saveAdvanceBtn').textContent='Сохранить доход',1300);
 });
 $('resetAdvanceBtn').addEventListener('click',()=>{
  if(confirm('Вернуть категории аванса к стартовым настройкам?')){advanceAllocations=structuredClone(advanceDefaults);persistAdvance();renderAdvance();}
@@ -1194,9 +1194,9 @@ $('resetAdvanceBtn').addEventListener('click',()=>{
 function renderAdvanceHistory(){
  renderStats();
  const el=$('advanceHistoryList');
- if(!advanceHistory.length){el.className='history-empty';el.textContent='Пока нет сохранённых авансов.';return;}
+ if(!advanceHistory.length){el.className='history-empty';el.textContent='Пока нет сохранённых записей дополнительного дохода.';return;}
  el.className='';
- el.innerHTML=advanceHistory.slice(0,8).map((h,i)=>`<div class="history-row"><div><b>${h.date}</b><br><span>Аванс ${money(h.amount)}</span></div><div><b>${money(h.amount)}</b><br><span>распределено</span></div><button class="ghost" data-remove-advance="${i}" style="padding:5px 8px">×</button></div>`).join('');
+ el.innerHTML=advanceHistory.slice(0,8).map((h,i)=>`<div class="history-row"><div><b>${h.date}</b><br><span>Дополнительный доход ${money(h.amount)}</span></div><div><b>${money(h.amount)}</b><br><span>распределено</span></div><button class="ghost" data-remove-advance="${i}" style="padding:5px 8px">×</button></div>`).join('');
 }
 $('advanceHistoryList').addEventListener('click',e=>{
  const i=e.target.dataset.removeAdvance;if(i!==undefined){advanceHistory.splice(Number(i),1);persistAdvance();renderAdvanceHistory();}
@@ -1206,9 +1206,9 @@ $('clearAdvanceHistory').addEventListener('click',()=>{
 });
 $('copyAdvanceBtn').addEventListener('click',async()=>{
  const amount=Math.max(0,Number($('advanceAmount').value)||0);
- const lines=['Куда бабки? — распределение аванса',`Аванс: ${money(amount)}`,'',...advanceAllocations.map(a=>`${a.name}: ${money(amount*a.pct/100)} (${a.pct}%)`)];
+ const lines=['ODDMONEY — распределение дополнительного дохода',`Дополнительный доход: ${money(amount)}`,'',...advanceAllocations.map(a=>`${a.name}: ${money(amount*a.pct/100)} (${a.pct}%)`)];
  const txt=lines.join('\n');
- try{await navigator.clipboard.writeText(txt);$('copyAdvanceBtn').textContent='Скопировано ✓';setTimeout(()=>$('copyAdvanceBtn').textContent='Скопировать план аванса',1300)}catch(e){prompt('Скопируй план:',txt)}
+ try{await navigator.clipboard.writeText(txt);$('copyAdvanceBtn').textContent='Скопировано ✓';setTimeout(()=>$('copyAdvanceBtn').textContent='Скопировать план дохода',1300)}catch(e){prompt('Скопируй план:',txt)}
 });
 load();
 loadAdvance();
