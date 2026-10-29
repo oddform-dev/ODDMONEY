@@ -1469,8 +1469,14 @@ $('backupFileInput').addEventListener('change',async e=>{
  finally{e.target.value='';}
 });
 function load(){
- try { const s=JSON.parse(localStorage.getItem('kudaBabkiState')); if(s) state={...defaults,...s}; } catch(e){}
- try { history=JSON.parse(localStorage.getItem('kudaBabkiHistory')||'[]'); } catch(e){history=[]}
+ try {
+  const s=JSON.parse(localStorage.getItem('kudaBabkiState'));
+  if(s&&typeof s==='object')state={...defaults,...s};
+ } catch(e){}
+ if(!Array.isArray(state.allocations)||state.allocations.length===0)state.allocations=structuredClone(defaults.allocations);
+ state.allocations=state.allocations.filter(a=>a&&typeof a==='object'&&a.id).map(a=>({...a,name:String(a.name||'Новая категория'),pct:Math.max(0,Math.min(100,Number(a.pct)||0)),color:a.color||palette[0]}));
+ if(!state.allocations.length)state.allocations=structuredClone(defaults.allocations);
+ try { history=JSON.parse(localStorage.getItem('kudaBabkiHistory')||'[]'); if(!Array.isArray(history))history=[]; } catch(e){history=[]}
  ['salary','credit','mortgage','other'].forEach(k=>$(k).value=state[k] ?? defaults[k]);
  render();
 }
@@ -1507,7 +1513,9 @@ $('allocations').addEventListener('click',e=>{
  if(deleteId){if(state.allocations.length<=1){alert('Нельзя удалить последнюю категорию.');return;}state.allocations=state.allocations.filter(x=>x.id!==deleteId);persist();render();}
 });
 $('addCategoryBtn').addEventListener('click',()=>{
- state.allocations.push({id:'custom-'+Date.now(),name:'Новая категория',pct:0,color:['#91b7ff','#c6a2ff','#f1c27d','#8ce0b0','#ff9f80'][state.allocations.length%5]});persist();render();
+ if(!Array.isArray(state.allocations))state.allocations=structuredClone(defaults.allocations);
+ state.allocations.push({id:'custom-'+Date.now(),name:'Новая категория',pct:0,color:palette[state.allocations.length%palette.length]});
+ persist();render();
 });
 ['salary','credit','mortgage','other'].forEach(k=>$(k).addEventListener('input',render));
 $('saveBtn').addEventListener('click',()=>{
@@ -1592,7 +1600,7 @@ function persistAdvance(){
  localStorage.setItem('kudaBabkiAdvanceAmount',$('advanceAmount').value);
 }
 function loadAdvance(){
- try{const saved=JSON.parse(localStorage.getItem('kudaBabkiAdvanceAllocations')||'null');if(Array.isArray(saved)&&saved.length>0)advanceAllocations=saved;}catch(e){}
+ try{const saved=JSON.parse(localStorage.getItem('kudaBabkiAdvanceAllocations')||'null');if(Array.isArray(saved)&&saved.length>0)advanceAllocations=saved;}catch(e){} if(!Array.isArray(advanceAllocations)||!advanceAllocations.length)advanceAllocations=structuredClone(advanceDefaults);
  try{advanceHistory=JSON.parse(localStorage.getItem('kudaBabkiAdvanceHistory')||'[]');if(!Array.isArray(advanceHistory))advanceHistory=[];}catch(e){advanceHistory=[];}
  $('advanceAmount').value=localStorage.getItem('kudaBabkiAdvanceAmount')||'25000';
  renderAdvance();
