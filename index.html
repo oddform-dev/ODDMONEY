@@ -111,6 +111,21 @@ button:disabled{cursor:not-allowed;filter:grayscale(.2)}
  .goal-grid{gap:8px}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+.collapsible{padding:0;overflow:hidden}
+.section-toggle{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:19px 22px;cursor:pointer;user-select:none}
+.section-toggle::-webkit-details-marker{display:none}
+.section-toggle>span:first-child{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:2px 10px;min-width:0}
+.section-number{grid-row:span 2;display:grid;place-items:center;width:32px;height:32px;border-radius:10px;background:#a3f2c414;color:var(--green);font-size:11px;font-weight:800}
+.section-title{font-size:14px;font-weight:750;letter-spacing:-.02em}
+.section-hint{grid-column:2;color:var(--muted);font-size:11px;line-height:1.45}
+.toggle-icon{width:28px;height:28px;flex:0 0 28px;border:1px solid var(--line);border-radius:9px;display:grid;place-items:center;background:#ffffff03}
+.toggle-icon:before{content:"";width:7px;height:7px;border-right:1.5px solid var(--muted);border-bottom:1.5px solid var(--muted);transform:translateY(-2px) rotate(45deg);transition:transform .2s}
+.collapsible[open] .toggle-icon:before{transform:translateY(2px) rotate(225deg)}
+.collapsible[open] .section-toggle{border-bottom:1px solid var(--line)}
+.section-content{padding:0 22px 22px}
+.section-content>.smallnote:first-child{margin-top:16px}
+.collapsible .section-content .summary:first-of-type{margin-top:4px}
+@media(max-width:780px){.section-toggle{padding:16px}.section-content{padding:0 16px 17px}.section-hint{max-width:240px}}
 </style>
 </head>
 <body>
@@ -177,8 +192,9 @@ button:disabled{cursor:not-allowed;filter:grayscale(.2)}
       </section>
     </div>
   </div>
-  <section class="panel tools-panel">
-    <h2>03 / Цель накоплений</h2>
+  <details class="panel tools-panel collapsible" id="goalSection">
+    <summary class="section-toggle"><span><span class="section-number">03</span><span class="section-title">Цель накоплений</span><span class="section-hint">Отслеживай прогресс накоплений</span></span><span class="toggle-icon" aria-hidden="true"></span></summary>
+    <div class="section-content">
     <p class="smallnote">Задай цель и отмечай, сколько уже отложено. Данные остаются на этом устройстве.</p>
     <div class="goal-grid">
       <div class="field"><label for="goalName">На что копим</label><input id="goalName" type="text" maxlength="60" placeholder="Например, отпуск"></div>
@@ -189,22 +205,27 @@ button:disabled{cursor:not-allowed;filter:grayscale(.2)}
     <div class="summary"><div class="label" id="goalProgressLabel">Укажи цель, чтобы увидеть прогресс</div><strong id="goalProgressAmount">0%</strong></div>
     <div class="actions"><button class="primary" id="saveGoalBtn" type="button">Сохранить цель</button></div>
     <div class="smallnote" id="goalStatus" aria-live="polite"></div>
-  </section>
+    </div>
+  </details>
   <div class="layout extra-layout">
-    <section class="panel">
-      <h2>04 / Статистика</h2>
+    <details class="panel collapsible">
+      <summary class="section-toggle"><span><span class="section-number">04</span><span class="section-title">Статистика</span><span class="section-hint">Итоги сохранённых выплат</span></span><span class="toggle-icon" aria-hidden="true"></span></summary>
+      <div class="section-content">
       <div class="summary"><div class="label">Сохранено распределений зарплаты</div><strong id="salaryHistoryCount">0</strong></div>
       <div class="summary"><div class="label">Сумма зарплат в истории</div><strong id="salaryHistoryTotal">0 ₽</strong></div>
       <div class="summary"><div class="label">Сохранено авансов</div><strong id="advanceHistoryCount">0</strong></div>
       <div class="summary"><div class="label">Сумма авансов в истории</div><strong id="advanceHistoryTotal">0 ₽</strong></div>
       <div class="smallnote" id="monthlySummary">Сохраняй распределения, чтобы собирать статистику.</div>
-    </section>
-    <section class="panel">
-      <h2>05 / Резервная копия</h2>
+      </div>
+    </details>
+    <details class="panel collapsible">
+      <summary class="section-toggle"><span><span class="section-number">05</span><span class="section-title">Резервная копия</span><span class="section-hint">Экспорт и восстановление данных</span></span><span class="toggle-icon" aria-hidden="true"></span></summary>
+      <div class="section-content">
       <p class="smallnote">Экспортируй настройки, категории, цель и историю в один JSON-файл. Импорт восстановит эти данные на текущем устройстве.</p>
       <div class="actions"><button class="primary" id="backupExportBtn" type="button">Экспортировать всё</button><button class="ghost" id="backupImportBtn" type="button">Импортировать копию</button><input id="backupFileInput" type="file" accept="application/json,.json" hidden></div>
       <div class="smallnote" id="backupStatus" aria-live="polite"></div>
-    </section>
+      </div>
+    </details>
   </div>
   <div class="footer">Данные хранятся в этом браузере на этом устройстве. Регулярно создавай резервную копию, чтобы не потерять историю.</div>
 </div>
