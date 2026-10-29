@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kuda-babki-v10';
+const CACHE_NAME = 'kuda-babki-v11';
 const APP_SHELL = [
   './',
   './index.html',
@@ -23,6 +23,20 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   const request = event.request;
   if (request.method !== 'GET') return;
+  // Для навигации сначала пробуем сеть, чтобы публикации обновлялись сразу.
+  // Если сети нет, используем сохранённую страницу.
+  if (request.mode === 'navigate') {
+    event.respondWith(
+      fetch(request).then(response => {
+        if (response && response.ok) {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put('./index.html', copy));
+        }
+        return response;
+      }).catch(() => caches.match('./index.html'))
+    );
+    return;
+  }
   event.respondWith(
     caches.match(request).then(cached => {
       if (cached) return cached;
@@ -32,10 +46,7 @@ self.addEventListener('fetch', event => {
           caches.open(CACHE_NAME).then(cache => cache.put(request, copy));
         }
         return response;
-      }).catch(() => {
-        if (request.mode === 'navigate') return caches.match('./index.html');
-        return Response.error();
-      });
+      }).catch(() => Response.error());
     })
   );
 });
