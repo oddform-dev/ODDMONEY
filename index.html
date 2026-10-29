@@ -481,6 +481,80 @@ body:not(.dark-theme) .allocation-collapse[open] .allocation-toggle{
   border-bottom-color:#e7e4ec;
 }
 
+
+/* Consistent typography and theme-aware balance cards */
+.tabs .tab,
+.tabs .tab.active{
+  font-family:inherit;
+  font-size:13px;
+  font-weight:750;
+  line-height:1.35;
+  letter-spacing:-.025em;
+  text-align:center;
+  -webkit-font-smoothing:antialiased;
+}
+.tabs .tab{min-height:42px}
+.tabs .tab.active{font-weight:800}
+#totalBox,
+#advanceView .total{
+  background:linear-gradient(115deg,#211b2b 0%,#211b2b 72%,#39223d 100%);
+  color:#fff;
+}
+#totalBox:before,
+#advanceView .total:before{
+  content:"";
+  display:block;
+  position:absolute;
+  right:-22px;
+  top:-54px;
+  width:190px;
+  height:190px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#e94ab8,#895cf6);
+  opacity:.95;
+  pointer-events:none;
+}
+#totalBox:after,
+#advanceView .total:after{
+  display:block;
+  position:absolute;
+  right:38px;
+  top:18px;
+  width:76px;
+  height:76px;
+  border-radius:50%;
+  background:#ffffff12;
+  pointer-events:none;
+}
+#totalBox .label,
+#advanceView .total .label{color:#e0d6e7}
+#totalBox strong,
+#advanceView .total strong{color:#fff}
+body.dark-theme #totalBox,
+body.dark-theme #advanceView .total{
+  background:linear-gradient(115deg,#211b2b 0%,#211b2b 72%,#39223d 100%);
+  border-color:#3b3348;
+}
+body.dark-theme #totalBox:before,
+body.dark-theme #advanceView .total:before{opacity:.95}
+body.dark-theme #totalBox .label,
+body.dark-theme #advanceView .total .label{color:#e0d6e7}
+body.dark-theme #totalBox strong,
+body.dark-theme #advanceView .total strong{color:#fff}
+body.dark-theme #totalBox.negative,
+body.dark-theme #advanceView .total.negative{background:#311b26}
+body.dark-theme #totalBox.negative:before,
+body.dark-theme #advanceView .total.negative:before{background:linear-gradient(135deg,#f26b82,#ad3d72)}
+body:not(.dark-theme) #totalBox,
+body:not(.dark-theme) #advanceView .total{
+  background:linear-gradient(115deg,#211b2b 0%,#211b2b 72%,#39223d 100%);
+  color:#fff;border:0;
+}
+body:not(.dark-theme) #totalBox .label,
+body:not(.dark-theme) #advanceView .total .label{color:#e0d6e7}
+body:not(.dark-theme) #totalBox strong,
+body:not(.dark-theme) #advanceView .total strong{color:#fff}
+
 </style>
 </head>
 <body>
