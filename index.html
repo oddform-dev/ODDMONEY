@@ -1138,6 +1138,42 @@ load();
 loadAdvance();
 renderGoal();
 renderStats();
+
+/* Swipe left on a category row to remove it on touch devices */
+function enableCategorySwipe(containerId, mode){
+ const container=$(containerId);
+ if(!container) return;
+ let startX=0,startY=0,startItem=null;
+ container.addEventListener('touchstart',e=>{
+   const touch=e.touches[0];
+   startItem=e.target.closest('.item');
+   if(!startItem || e.target.closest('button, input, label')){startItem=null;return;}
+   startX=touch.clientX;startY=touch.clientY;
+ },{passive:true});
+ container.addEventListener('touchend',e=>{
+   if(!startItem)return;
+   const touch=e.changedTouches[0];
+   const dx=touch.clientX-startX,dy=touch.clientY-startY;
+   const item=startItem;startItem=null;
+   if(dx>-75 || Math.abs(dy)>Math.abs(dx)*.75)return;
+   const name=item.querySelector('.name-input')?.value || 'эту категорию';
+   if(!confirm('Удалить категорию «'+name+'»?'))return;
+   if(mode==='salary'){
+     const id=item.querySelector('[data-name]')?.dataset.name;
+     if(!id)return;
+     if(state.allocations.length<=1){alert('Нельзя удалить последнюю категорию.');return;}
+     state.allocations=state.allocations.filter(x=>x.id!==id);persist();render();
+   }else{
+     const id=item.querySelector('[data-advance-name]')?.dataset.advanceName;
+     if(!id)return;
+     if(advanceAllocations.length<=1){alert('Нельзя удалить последнюю категорию.');return;}
+     advanceAllocations=advanceAllocations.filter(x=>x.id!==id);persistAdvance();renderAdvance();
+   }
+ },{passive:true});
+}
+enableCategorySwipe('allocations','salary');
+enableCategorySwipe('advanceAllocations','advance');
+
 </script>
 <script>
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
