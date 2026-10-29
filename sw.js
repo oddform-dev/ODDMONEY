@@ -1,4 +1,4 @@
-const CACHE_NAME = 'kuda-babki-v8';
+const CACHE_NAME = 'kuda-babki-v9';
 const APP_SHELL = [
   './',
   './index.html',
