@@ -139,6 +139,8 @@ $('allocations').addEventListener('change',e=>{
  if(id){const a=state.allocations.find(x=>x.id===id);if(a){a.pct=Math.max(0,Math.min(100,Number(e.target.value)||0));persist();render();}return;}
  const nameId=e.target.dataset.name;
  if(nameId){const a=state.allocations.find(x=>x.id===nameId);if(a){a.name=e.target.value.trim()||'Новая категория';persist();render();}return;}
+});
+$('allocations').addEventListener('click',e=>{
  const deleteId=e.target.dataset.delete;
  if(deleteId){if(state.allocations.length<=1){alert('Нельзя удалить последнюю категорию.');return;}state.allocations=state.allocations.filter(x=>x.id!==deleteId);persist();render();}
 });
@@ -212,6 +214,8 @@ $('advanceAllocations').addEventListener('change',e=>{
  if(id){const a=advanceAllocations.find(x=>x.id===id);if(a){a.pct=Math.max(0,Math.min(100,Number(e.target.value)||0));renderAdvance();persistAdvance();}return;}
  const nameId=e.target.dataset.advanceName;
  if(nameId){const a=advanceAllocations.find(x=>x.id===nameId);if(a){a.name=e.target.value.trim()||'Новая категория';persistAdvance();renderAdvance();}return;}
+});
+$('advanceAllocations').addEventListener('click',e=>{
  const deleteId=e.target.dataset.deleteAdvance;
  if(deleteId){if(advanceAllocations.length<=1){alert('Нельзя удалить последнюю категорию.');return;}advanceAllocations=advanceAllocations.filter(x=>x.id!==deleteId);persistAdvance();renderAdvance();}
 });
