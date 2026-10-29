@@ -555,6 +555,134 @@ body:not(.dark-theme) #advanceView .total .label{color:#e0d6e7}
 body:not(.dark-theme) #totalBox strong,
 body:not(.dark-theme) #advanceView .total strong{color:#fff}
 
+
+/* Final theme sync: expandable cards and typography */
+body:not(.dark-theme) .income-collapse,
+body:not(.dark-theme) .allocation-collapse{
+  background:#fff !important;
+  border-color:#e7e4ec !important;
+  color:#28232e !important;
+}
+body:not(.dark-theme) .income-toggle,
+body:not(.dark-theme) .allocation-toggle{
+  background:linear-gradient(100deg,#faf8fc,#fff) !important;
+  color:#28232e !important;
+}
+body:not(.dark-theme) .income-content,
+body:not(.dark-theme) .allocation-content{
+  background:#fff !important;
+  color:#28232e !important;
+}
+body.dark-theme .income-collapse,
+body.dark-theme .allocation-collapse{
+  background:#111219 !important;
+  border-color:#2b2d38 !important;
+  color:#f4f2f7 !important;
+}
+body.dark-theme .income-toggle,
+body.dark-theme .allocation-toggle{
+  background:linear-gradient(100deg,#1a1c24,#111219) !important;
+  color:#f4f2f7 !important;
+}
+body.dark-theme .income-content,
+body.dark-theme .allocation-content{
+  background:#111219 !important;
+  color:#f4f2f7 !important;
+}
+body.dark-theme .allocation-content .name-input{
+  background:#101117 !important;
+  border-color:#343541 !important;
+  color:#f4f2f7 !important;
+}
+body.dark-theme .allocation-content .pct input{
+  background:#101117 !important;
+  border-color:#343541 !important;
+  color:#f4f2f7 !important;
+}
+body:not(.dark-theme) .allocation-content .name-input{
+  background:#f8f7fa !important;
+  border-color:#e7e3ec !important;
+  color:#28232e !important;
+}
+body:not(.dark-theme) .allocation-content .pct input{
+  background:#faf9fc !important;
+  border-color:#e9e4ee !important;
+  color:#28232e !important;
+}
+.tabs .tab,
+.tabs .tab.active{
+  box-sizing:border-box;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:44px;
+  padding:11px 14px;
+  font-family:inherit;
+  font-size:13px;
+  font-weight:750;
+  line-height:1.35;
+  letter-spacing:-.02em;
+  text-align:center;
+}
+.tabs .tab.active{font-weight:800}
+@media(max-width:700px){
+ .tabs .tab,.tabs .tab.active{font-size:12px;padding:10px 7px;min-height:42px}
+}
+/* Use the same theme-aware balance card for both income types */
+#totalBox,
+#advanceView .total{
+  position:relative;
+  overflow:hidden;
+  min-height:113px;
+  box-sizing:border-box;
+  padding:24px 22px;
+  border-radius:18px;
+  background:linear-gradient(115deg,#211b2b 0%,#211b2b 72%,#39223d 100%) !important;
+  color:#fff !important;
+  border:0;
+}
+#totalBox:before,
+#advanceView .total:before{
+  content:"";
+  display:block;
+  position:absolute;
+  right:-22px;
+  top:-54px;
+  width:190px;
+  height:190px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#e94ab8,#895cf6);
+  opacity:.95;
+  pointer-events:none;
+}
+#totalBox:after,
+#advanceView .total:after{
+  content:"";
+  display:block;
+  position:absolute;
+  right:38px;
+  top:18px;
+  width:76px;
+  height:76px;
+  border-radius:50%;
+  background:#ffffff12;
+  pointer-events:none;
+}
+#totalBox .label,
+#advanceView .total .label{position:relative;z-index:1;color:#e0d6e7 !important}
+#totalBox strong,
+#advanceView .total strong{position:relative;z-index:1;color:#fff !important}
+body.dark-theme #totalBox,
+body.dark-theme #advanceView .total,
+body:not(.dark-theme) #totalBox,
+body:not(.dark-theme) #advanceView .total{
+  background:linear-gradient(115deg,#211b2b 0%,#211b2b 72%,#39223d 100%) !important;
+}
+#totalBox.negative,
+#advanceView .total.negative{background:#311b26 !important}
+#totalBox.negative:before,
+#advanceView .total.negative:before{background:linear-gradient(135deg,#f26b82,#ad3d72)}
+
 </style>
 </head>
 <body>
@@ -571,7 +699,7 @@ body:not(.dark-theme) #advanceView .total strong{color:#fff}
   <div class="layout">
     <section class="panel">
       <h2>01 / Деньги на входе</h2>
-      <div class="field"><label for="salary">Полученная зарплата, ₽</label><input id="salary" class="money-input" type="number" min="0" step="100" value="80000"></div>
+      <div class="field"><label for="salary">Сумма, ₽</label><input id="salary" class="money-input" type="number" min="0" step="100" value="80000"></div>
       <details class="income-collapse" id="salaryIncomeDetails"><summary class="income-toggle"><span>Обязательные платежи и действия</span><span class="toggle-icon" aria-hidden="true"></span></summary><div class="income-content">
       <div class="fixed">
         <div class="field"><label for="credit">Кредит, ₽</label><input id="credit" type="number" min="0" step="100" value="5000"></div>
@@ -603,8 +731,8 @@ body:not(.dark-theme) #advanceView .total strong{color:#fff}
     <div class="layout">
       <section class="panel">
         <h2>01 / Аванс</h2>
-        <div class="field"><label for="advanceAmount">Полученный аванс, ₽</label><input id="advanceAmount" class="money-input" type="number" min="0" step="100" value="25000"></div>
-        <div class="smallnote">Введи фактически полученную сумму аванса. Схема аванса независима от основной зарплаты и использует собственные категории.</div>
+        <div class="field"><label for="advanceAmount">Сумма, ₽</label><input id="advanceAmount" class="money-input" type="number" min="0" step="100" value="25000"></div>
+        <div class="smallnote">Введи сумму дополнительного дохода. Его распределение настраивается отдельно от основного дохода и использует собственные категории.</div>
         <div class="actions"><button class="primary" id="saveAdvanceBtn">Сохранить аванс</button><button class="ghost" id="resetAdvanceBtn">Вернуть стартовые настройки</button></div>
         <div class="warning" id="advanceWarning"></div>
       </section>
