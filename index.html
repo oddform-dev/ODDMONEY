@@ -1732,8 +1732,6 @@ function enablePercentWheel(containerId){
      if(containerId==='allocations')render();else renderAdvance();
    }
  });
- const container=$(containerId);
- if(!container)return;
  let active=null,startY=0,lastY=0,startTime=0,dragging=false;
  container.addEventListener('wheel',e=>{
    const wheel=e.target.closest('.pct-wheel');if(!wheel)return;
