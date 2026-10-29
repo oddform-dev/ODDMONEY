@@ -1224,39 +1224,19 @@ body.dark-theme #salaryView .history-row,body.dark-theme #advanceView .history-r
 
 
 
-/* Compact percentage control; open the wheel only on demand */
-.pct-control{position:relative;flex:0 0 auto;display:flex;align-items:center;justify-content:center}
-.pct-display{display:flex;align-items:center;justify-content:center;gap:2px;min-width:48px;height:34px;padding:0 7px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--text);font-size:14px;font-weight:800;font-variant-numeric:tabular-nums;box-shadow:none}
-.pct-display>span:first-of-type{font-size:10px;color:var(--muted);font-weight:650}
-.pct-caret{display:none!important}
-.pct-wheel-popover{display:none;position:absolute;right:0;bottom:calc(100% + 7px);z-index:100;width:54px;padding:4px;border:1px solid var(--line);border-radius:13px;background:var(--panel);box-shadow:0 8px 24px #0002}
-.pct-wheel-popover.is-open{display:block}
-.pct-wheel{width:100%!important;height:110px!important;flex:0 0 auto!important;overflow:hidden;touch-action:none!important;overscroll-behavior:contain;border:0!important;box-shadow:none!important;background:transparent!important}
-.pct-wheel:before{top:43px!important;height:22px!important}
-.pct-wheel .wheel-track{display:flex;flex-direction:column;width:100%;will-change:transform;transform:translateY(0);transition:transform 170ms cubic-bezier(.2,.75,.25,1)}
-.pct-wheel .wheel-row{height:22px;min-height:22px;display:flex;align-items:center;justify-content:center;position:relative;line-height:1;flex:0 0 22px}
-.pct-wheel .wheel-neighbor{font-size:11px;color:var(--muted);opacity:.42}
-.pct-wheel .wheel-current{gap:2px;font-size:15px;font-weight:850;font-variant-numeric:tabular-nums}
-.pct-wheel .wheel-current strong{font-size:15px;font-weight:850}
-.pct-wheel .wheel-current span{font-size:9px;color:var(--muted)}
-.pct-wheel.is-dragging .wheel-row{transition:none}
-#allocations .item,#advanceAllocations .item{overflow:visible}
-#allocations .subrow,#advanceAllocations .subrow{gap:9px}
-#allocations .item,#advanceAllocations .item{padding:10px 0!important}
-#allocations .itemtop,#advanceAllocations .itemtop{gap:8px}
-#allocations .amount,#advanceAllocations .amount{font-size:15px}
-#allocations .name-input,#advanceAllocations .name-input{font-size:13px;padding:6px 7px}
-#allocations .subrow,#advanceAllocations .subrow{margin-top:7px}
-#allocations .bar,#advanceAllocations .bar{height:5px}
-#allocations .remove-item,#advanceAllocations .remove-item{padding:5px 7px}
-.allocation-collapse[open],.allocation-content{overflow:visible!important}
-@media(max-width:600px){
- .pct-display{min-width:45px;height:32px;font-size:13px;padding:0 6px}
- .pct-wheel-popover{width:52px}
- #allocations .item,#advanceAllocations .item{padding:9px 0!important}
- #allocations .amount,#advanceAllocations .amount{font-size:13px}
- #allocations .name-input,#advanceAllocations .name-input{font-size:12px}
-}
+
+/* Native-scroll percentage wheel with all values 0..100 */
+.pct-wheel{width:100%!important;height:110px!important;flex:0 0 auto!important;overflow-x:hidden!important;overflow-y:auto!important;touch-action:pan-y!important;overscroll-behavior:contain;scroll-snap-type:y mandatory;scrollbar-width:none;border:0!important;box-shadow:none!important;background:transparent!important;-webkit-overflow-scrolling:touch}
+.pct-wheel::-webkit-scrollbar{display:none}
+.pct-wheel:before{content:"";position:absolute;z-index:2;pointer-events:none;left:3px;right:3px;top:43px;height:22px;border-radius:7px;background:linear-gradient(100deg,#e947c21b,#9655f51b)}
+.pct-wheel .wheel-track{display:flex;flex-direction:column;width:100%;padding:44px 0;box-sizing:border-box;transform:none!important;transition:none!important}
+.pct-wheel .wheel-row{height:22px;min-height:22px;display:flex;align-items:center;justify-content:center;gap:2px;position:relative;line-height:1;flex:0 0 22px;scroll-snap-align:center;color:var(--muted);opacity:.55;font-size:11px}
+.pct-wheel .wheel-row strong{font-size:11px;font-weight:600}
+.pct-wheel .wheel-row span{font-size:8px}
+.pct-wheel .wheel-row.wheel-current{color:var(--text);opacity:1;font-size:15px;font-weight:850}
+.pct-wheel .wheel-row.wheel-current strong{font-size:15px;font-weight:850}
+.pct-wheel .wheel-row.wheel-current span{font-size:9px;color:var(--muted)}
+.pct-wheel-popover{overscroll-behavior:contain}
 
 /* Truly compact collapsed utility sections */
 details.panel.collapsible:not([open]){
@@ -1722,12 +1702,7 @@ var openPercentWheel = null;
 function percentWheel(id,value,mode,name){
  const p=Math.max(0,Math.min(100,Number(value)||0));
  const key=mode+':'+id;
- const rows=[-2,-1,0,1,2].map(offset=>{
-   const n=p+offset,shown=n>=0&&n<=100?n:'';
-   return offset===0
-     ? `<div class="wheel-row wheel-current"><strong>${p}</strong><span>%</span></div>`
-     : `<div class="wheel-row wheel-neighbor">${shown}</div>`;
- }).join('');
+ const rows=Array.from({length:101},(_,n)=>`<div class="wheel-row${n===p?' wheel-current':''}" data-wheel-value="${n}"><strong>${n}</strong><span>%</span></div>`).join('');
  const open=openPercentWheel===key;
  return `<div class="pct-control" data-percent-key="${key}">
    <button type="button" class="pct-display" data-percent-toggle="${key}" aria-expanded="${open}" aria-label="Изменить процент ${escapeHtml(name)}">${p}<span>%</span><span class="pct-caret">⌃</span></button>
@@ -1752,6 +1727,13 @@ function enablePercentWheel(containerId){
      const key=toggle.dataset.percentToggle;
      openPercentWheel=openPercentWheel===key?null:key;
      if(containerId==='allocations')render();else renderAdvance();
+     if(openPercentWheel){
+       const [mode,id]=openPercentWheel.split(':');
+       setTimeout(()=>{
+         const wheel=container.querySelector('.pct-wheel[data-wheel-id="'+id+'"]');
+         if(wheel)wheel.scrollTop=Math.max(0,Math.min(100,Number(wheel.getAttribute('aria-valuenow'))||0))*22;
+       },0);
+     }
      return;
    }
    if(openPercentWheel&&!e.target.closest('.pct-control')){
@@ -1759,65 +1741,26 @@ function enablePercentWheel(containerId){
      if(containerId==='allocations')render();else renderAdvance();
    }
  });
- let active=null,startY=0,lastY=0,startTime=0,dragging=false;
- container.addEventListener('wheel',e=>{
-   const wheel=e.target.closest('.pct-wheel');if(!wheel)return;
-   e.preventDefault();
-   const delta=e.deltaY>0?1:-1;
-   setWheelPercent(wheel.dataset.wheelMode,wheel.dataset.wheelId,delta);
- },{passive:false});
+ container.addEventListener('scroll',e=>{
+   const wheel=e.target.closest('.pct-wheel');
+   if(!wheel)return;
+   clearTimeout(wheel._settleTimer);
+   wheel._settleTimer=setTimeout(()=>{
+     const value=Math.max(0,Math.min(100,Math.round(wheel.scrollTop/22)));
+     const list=wheel.dataset.wheelMode==='salary'?state.allocations:advanceAllocations;
+     const item=list.find(x=>x.id===wheel.dataset.wheelId);
+     if(!item||Number(item.pct)===value)return;
+     setWheelPercent(wheel.dataset.wheelMode,wheel.dataset.wheelId,value-Number(item.pct||0));
+   },130);
+ },true);
  container.addEventListener('keydown',e=>{
    const wheel=e.target.closest('.pct-wheel');if(!wheel)return;
-   let delta=0;if(e.key==='ArrowUp')delta=1;else if(e.key==='ArrowDown')delta=-1;else return;
-   e.preventDefault();setWheelPercent(wheel.dataset.wheelMode,wheel.dataset.wheelId,delta);
+   let delta=0;if(e.key==='ArrowUp')delta=-1;else if(e.key==='ArrowDown')delta=1;else if(e.key==='Home')delta=-101;else if(e.key==='End')delta=101;else return;
+   e.preventDefault();
+   const value=Math.max(0,Math.min(100,Math.round(wheel.scrollTop/22)+delta));
+   wheel.scrollTo({top:value*22,behavior:'smooth'});
  });
- container.addEventListener('touchstart',e=>{
-   const wheel=e.target.closest('.pct-wheel');if(!wheel)return;
-   active=wheel;startY=e.touches[0].clientY;lastY=startY;startTime=performance.now();dragging=true;
-   const track=wheel.querySelector('.wheel-track');
-   track.style.transition='none';track.style.transform='translateY(0px)';
-   wheel.classList.add('is-dragging');
- },{passive:true});
- container.addEventListener('touchmove',e=>{
-   if(!dragging||!active)return;
-   lastY=e.touches[0].clientY;
-   const delta=lastY-startY;
-   const track=active.querySelector('.wheel-track');
-   track.style.transform='translateY('+Math.max(-88,Math.min(88,delta))+'px)';
- },{passive:true});
- const finish=()=>{
-   if(!dragging||!active)return;
-   const wheel=active,delta=lastY-startY,duration=Math.max(1,performance.now()-startTime);
-   const track=wheel.querySelector('.wheel-track');
-   const distanceSteps=Math.round(-delta/22);
-   const velocity= -delta/duration;
-   const momentum= Math.abs(velocity)>.45 ? Math.sign(velocity)*Math.min(3,Math.ceil(Math.abs(velocity)*2)) : 0;
-   let steps=distanceSteps;
-   if(Math.abs(delta)<18)steps=momentum;
-   else if(momentum&&Math.sign(momentum)===Math.sign(distanceSteps))steps+=momentum;
-   steps=Math.max(-8,Math.min(8,steps));
-   const list=wheel.dataset.wheelMode==='salary'?state.allocations:advanceAllocations;
-   const item=list.find(x=>x.id===wheel.dataset.wheelId);
-   if(item)steps=Math.max(-Number(item.pct||0),Math.min(100-Number(item.pct||0),steps));
-   wheel.classList.remove('is-dragging');
-   if(!steps){
-     track.style.transition='transform 170ms cubic-bezier(.2,.75,.25,1)';
-     track.style.transform='translateY(0px)';
-     setTimeout(()=>{if(track.isConnected){track.style.transition='';track.style.transform=''}},190);
-   }else{
-     track.style.transition='transform 170ms cubic-bezier(.18,.8,.25,1)';
-     track.style.transform='translateY('+(-steps*22)+'px)';
-     setTimeout(()=>setWheelPercent(wheel.dataset.wheelMode,wheel.dataset.wheelId,steps),175);
-   }
-   active=null;dragging=false;
- };
- container.addEventListener('touchend',finish,{passive:true});
- container.addEventListener('touchcancel',()=>{
-   if(active){const track=active.querySelector('.wheel-track');active.classList.remove('is-dragging');track.style.transition='transform 150ms ease';track.style.transform='translateY(0px)';}
-   active=null;dragging=false;
- },{passive:true});
 }
-
 enablePercentWheel('allocations');
 enablePercentWheel('advanceAllocations');
 
