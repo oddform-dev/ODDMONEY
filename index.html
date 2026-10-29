@@ -1114,6 +1114,31 @@ body.dark-theme .alloc-head .sum-pct b{
   }
 }
 
+
+/* Put save controls directly under the categories they save */
+#salaryAccounts .category-save-row,
+#advanceAccounts .category-save-row{
+  position:sticky;
+  bottom:8px;
+  z-index:5;
+  padding:8px;
+  margin:12px -4px 0 !important;
+  background:color-mix(in srgb,var(--panel) 94%,transparent);
+  border:1px solid var(--line);
+  border-radius:13px;
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+#salaryAccounts .category-save-row .primary,
+#advanceAccounts .category-save-row .primary{
+  width:100%;
+  min-height:43px;
+  background:linear-gradient(110deg,#e947c2,#9655f5);
+  border-color:transparent;
+  color:#fff;
+  box-shadow:0 4px 14px #c44be51f;
+}
+
 </style>
 </head>
 <body>
@@ -1138,7 +1163,7 @@ body.dark-theme .alloc-head .sum-pct b{
       </div>
       <div class="field"><label for="other">Другие обязательные расходы, ₽</label><input id="other" type="number" min="0" step="100" value="0"></div>
       <div class="smallnote">Сюда добавь обычный платёж по ипотеке, коммуналку и другие обязательные списания, если они идут из основного дохода.</div>
-      <div class="actions"><button class="primary" id="saveBtn">Сохранить распределение</button><button class="ghost" id="resetBtn">Сбросить</button></div>
+      <div class="actions"><button class="ghost" id="resetBtn">Сбросить</button></div>
       </div></details>
       <div class="warning" id="warning"></div>
     </section>
@@ -1147,7 +1172,7 @@ body.dark-theme .alloc-head .sum-pct b{
       <div class="total" id="totalBox"><div class="label">Остаток после обязательных платежей</div><strong id="remaining">73 000 ₽</strong></div>
       <div class="alloc-head"><h2>Распределение по категориям</h2><div class="sum-pct">Всего: <b id="pctTotal">100%</b></div></div>
       <div class="donut-wrap"><div class="donut" id="salaryDonut" role="img" aria-label="Диаграмма распределения основного дохода"></div><div class="donut-legend" id="salaryLegend"></div></div>
-      <details class="allocation-collapse" id="salaryAccounts"><summary class="allocation-toggle"><span>Счета и категории</span><span class="allocation-toggle-meta">Настроить названия и проценты</span><span class="toggle-icon" aria-hidden="true"></span></summary><div class="allocation-content"><div id="allocations"></div><div class="actions"><button id="addCategoryBtn" class="ghost" type="button">＋ Добавить категорию</button><button id="balanceCategoriesBtn" class="ghost" type="button">Распределить поровну</button></div></div></details>
+      <details class="allocation-collapse" id="salaryAccounts"><summary class="allocation-toggle"><span>Счета и категории</span><span class="allocation-toggle-meta">Настроить названия и проценты</span><span class="toggle-icon" aria-hidden="true"></span></summary><div class="allocation-content"><div id="allocations"></div><div class="actions"><button id="addCategoryBtn" class="ghost" type="button">＋ Добавить категорию</button><button id="balanceCategoriesBtn" class="ghost" type="button">Распределить поровну</button></div><div class="actions category-save-row"><button class="primary" id="saveBtn">Сохранить распределение</button></div></div></details>
       <div class="summary"><div><div class="label">Обязательные платежи</div><div style="font-size:11px;color:var(--muted)">Кредит + ипотека + прочее</div></div><strong id="fixedTotal">7 000 ₽</strong></div>
       <div class="summary"><div><div class="label">Проверка суммы</div><div style="font-size:11px;color:var(--muted)" id="checkText">Всё распределено</div></div><strong id="checkAmount">73 000 ₽</strong></div>
       <div class="actions"><button id="copyBtn">Скопировать план</button><button id="csvBtn" class="ghost">Экспорт истории CSV</button></div>
@@ -1164,7 +1189,7 @@ body.dark-theme .alloc-head .sum-pct b{
         <h2>01 / Дополнительный доход</h2>
         <div class="field"><label for="advanceAmount">Сумма, ₽</label><input id="advanceAmount" class="money-input" type="number" min="0" step="100" value="25000"></div>
         <div class="smallnote">Введи сумму дополнительного дохода. Его распределение настраивается отдельно от основного дохода и использует собственные категории.</div>
-        <div class="actions"><button class="primary" id="saveAdvanceBtn">Сохранить доход</button><button class="ghost" id="resetAdvanceBtn">Вернуть стартовые категории</button></div>
+        <div class="actions"><button class="ghost" id="resetAdvanceBtn">Вернуть стартовые категории</button></div>
         <div class="warning" id="advanceWarning"></div>
       </section>
       <section class="panel">
@@ -1172,7 +1197,7 @@ body.dark-theme .alloc-head .sum-pct b{
         <div class="total"><div class="label">Весь дополнительный доход к распределению</div><strong id="advanceRemaining">25 000 ₽</strong></div>
         <div class="alloc-head"><h2>Распределение по категориям</h2><div class="sum-pct">Всего: <b id="advancePctTotal">100%</b></div></div>
         <div class="donut-wrap"><div class="donut" id="advanceDonut" role="img" aria-label="Диаграмма распределения дополнительного дохода"></div><div class="donut-legend" id="advanceLegend"></div></div>
-        <details class="allocation-collapse" id="advanceAccounts"><summary class="allocation-toggle"><span>Счета и категории</span><span class="allocation-toggle-meta">Настроить названия и проценты</span><span class="toggle-icon" aria-hidden="true"></span></summary><div class="allocation-content"><div id="advanceAllocations"></div><div class="actions"><button id="addAdvanceCategoryBtn" class="ghost" type="button">＋ Добавить категорию</button><button id="balanceAdvanceCategoriesBtn" class="ghost" type="button">Распределить поровну</button></div></div></details>
+        <details class="allocation-collapse" id="advanceAccounts"><summary class="allocation-toggle"><span>Счета и категории</span><span class="allocation-toggle-meta">Настроить названия и проценты</span><span class="toggle-icon" aria-hidden="true"></span></summary><div class="allocation-content"><div id="advanceAllocations"></div><div class="actions"><button id="addAdvanceCategoryBtn" class="ghost" type="button">＋ Добавить категорию</button><button id="balanceAdvanceCategoriesBtn" class="ghost" type="button">Распределить поровну</button></div><div class="actions category-save-row"><button class="primary" id="saveAdvanceBtn">Сохранить доход</button></div></div></details>
         <div class="summary"><div><div class="label">Останется нераспределённым</div><div style="font-size:11px;color:var(--muted)">Если проценты не составляют 100%</div></div><strong id="advanceUnallocated">0 ₽</strong></div>
         <details class="income-collapse" id="advanceHistoryDetails"><summary class="income-toggle"><span>История дополнительного дохода</span><span class="allocation-toggle-meta">Сохранённые распределения</span><span class="toggle-icon" aria-hidden="true"></span></summary><div class="income-content"><div class="actions" style="margin-top:12px"><button class="ghost" id="clearAdvanceHistory" style="padding:6px 9px;font-size:12px">Очистить историю</button></div><div id="advanceHistoryList" class="history-empty">Пока нет сохранённых записей дополнительного дохода.</div></div></details>
         <div class="actions"><button id="copyAdvanceBtn">Скопировать план дохода</button></div>
