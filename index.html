@@ -1334,6 +1334,53 @@ details.panel.collapsible:not([open]) .section-hint{font-size:9px !important;lin
  #allocations .name-input,#advanceAllocations .name-input{font-size:12px}
 }
 
+
+/* ODDMONEY v52: mobile-first compact dashboard and clear state */
+@media(max-width:780px){
+ .wrap{padding-top:14px!important;padding-bottom:calc(28px + env(safe-area-inset-bottom))!important}
+ .top{gap:9px!important;margin-bottom:14px!important}
+ .sub{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+ .tabs{margin-bottom:12px!important;top:4px!important}
+ .layout{gap:10px!important}
+ .panel{padding:14px!important;border-radius:15px!important}
+ #salaryView .layout>.panel h2,#advanceView .layout>.panel h2{margin-bottom:12px}
+ #salaryView .total,#advanceView .total{margin-bottom:14px!important;min-height:108px!important;padding:17px 15px!important}
+ .alloc-head{margin:15px 0 9px!important}
+ .donut-wrap{margin:8px 0 12px!important}
+}
+#allocations .item,#advanceAllocations .item{padding:7px 0!important}
+#allocations .itemtop,#advanceAllocations .itemtop{display:grid;grid-template-columns:minmax(0,1fr) auto 27px;gap:7px!important;align-items:center}
+#allocations .itemname,#advanceAllocations .itemname{min-width:0;gap:7px}
+#allocations .name-input,#advanceAllocations .name-input{min-width:0;width:100%;padding:6px 7px!important;font-size:13px!important;line-height:1.25}
+#allocations .amount,#advanceAllocations .amount{font-size:14px!important;white-space:nowrap}
+#allocations .remove-item,#advanceAllocations .remove-item{width:27px;height:29px;padding:0!important;display:grid;place-items:center}
+#allocations .subrow,#advanceAllocations .subrow{margin-top:5px!important;gap:8px!important}
+#allocations .bar,#advanceAllocations .bar{height:4px!important}
+@media(max-width:600px){
+ #allocations .item,#advanceAllocations .item{padding:6px 0!important}
+ #allocations .itemtop,#advanceAllocations .itemtop{grid-template-columns:minmax(0,1fr) auto 25px;gap:6px!important}
+ #allocations .name-input,#advanceAllocations .name-input{font-size:12px!important;padding:5px 6px!important}
+ #allocations .amount,#advanceAllocations .amount{font-size:12px!important}
+ #allocations .remove-item,#advanceAllocations .remove-item{width:25px;height:27px}
+ .pct-display{height:30px!important;min-width:43px!important;font-size:12px!important}
+}
+.sum-pct{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+.sum-pct span{font-size:10px;color:var(--muted)}
+body:not(.dark-theme) .sum-pct span{color:#777481}
+.saved-state-note{padding:8px 10px;margin:0 0 8px;border-radius:9px;background:color-mix(in srgb,var(--panel2) 55%,transparent)}
+.stats-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.stats-metric{display:flex;flex-direction:column;gap:7px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--panel2);min-width:0}
+.stats-metric span{font-size:11px;line-height:1.35;color:var(--muted)}
+.stats-metric strong{font-size:17px;line-height:1.2;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.monthly-summary{margin-top:12px;padding-top:10px;border-top:1px solid var(--line)}
+body:not(.dark-theme) .stats-metric{background:#faf8fc;border-color:#ece7f1}
+body:not(.dark-theme) .stats-metric span{color:#777481}
+body:not(.dark-theme) .stats-metric strong{color:#211b2b}
+@media(max-width:420px){.stats-grid{gap:6px}.stats-metric{padding:9px}.stats-metric strong{font-size:15px}.stats-metric span{font-size:10px}}
+#goalSection:not([open]) .section-hint{max-width:min(70vw,520px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#salaryAccounts .category-save-row,#advanceAccounts .category-save-row{bottom:calc(6px + env(safe-area-inset-bottom))}
+@media(prefers-reduced-motion:reduce){#allocations .item,#advanceAllocations .item{transition:none!important}}
+
 </style>
 </head>
 <body>
@@ -1365,11 +1412,11 @@ details.panel.collapsible:not([open]) .section-hint{font-size:9px !important;lin
     <section class="panel">
       <h2>02 / Распределения дохода</h2>
       <div class="total" id="totalBox"><div class="label">Остаток после обязательных платежей</div><strong id="remaining">73 000 ₽</strong></div>
-      <div class="alloc-head"><h2>Распределение по категориям</h2><div class="sum-pct">Всего: <b id="pctTotal">100%</b></div></div>
+      <div class="alloc-head"><h2>Распределение по категориям</h2><div class="sum-pct"><span id="pctTotalLabel">Всего:</span> <b id="pctTotal">100%</b></div></div>
       <div class="donut-wrap"><div class="donut" id="salaryDonut" role="img" aria-label="Диаграмма распределения основного дохода"></div><div class="donut-legend" id="salaryLegend"></div></div>
       <details class="allocation-collapse" id="salaryAccounts"><summary class="allocation-toggle"><span>Счета и категории</span><span class="allocation-toggle-meta">Настроить названия и проценты</span><span class="toggle-icon" aria-hidden="true"></span></summary><div class="allocation-content"><div id="allocations"></div><div class="actions"><button id="addCategoryBtn" class="ghost" type="button">＋ Добавить категорию</button><button id="balanceCategoriesBtn" class="ghost" type="button">Распределить поровну</button></div><div class="actions category-save-row"><button class="primary" id="saveBtn">Сохранить распределение</button></div></div></details>
       <div class="summary"><div><div class="label">Обязательные платежи</div><div style="font-size:11px;color:var(--muted)">Кредит + ипотека + прочее</div></div><strong id="fixedTotal">7 000 ₽</strong></div>
-      <div class="summary"><div><div class="label">Проверка суммы</div><div style="font-size:11px;color:var(--muted)" id="checkText">Всё распределено</div></div><strong id="checkAmount">73 000 ₽</strong></div>
+      <div class="summary"><div><div class="label">Проверка суммы</div><div style="font-size:11px;color:var(--muted)" id="checkText">Всё распределено</div></div><strong id="checkAmount">73 000 ₽</strong></div><div class="smallnote saved-state-note">Текущий расчёт не попадёт в историю, пока ты не сохранишь распределение.</div>
       <div class="actions"><button id="copyBtn">Скопировать план</button><button id="csvBtn" class="ghost">Экспорт истории CSV</button></div>
       <div class="history">
         <div class="alloc-head"><h2>История распределений</h2><button class="ghost" id="clearHistory" style="padding:6px 9px;font-size:12px">Очистить</button></div>
@@ -1390,7 +1437,7 @@ details.panel.collapsible:not([open]) .section-hint{font-size:9px !important;lin
       <section class="panel">
         <h2>02 / Распределение дополнительного дохода</h2>
         <div class="total"><div class="label">Весь дополнительный доход к распределению</div><strong id="advanceRemaining">25 000 ₽</strong></div>
-        <div class="alloc-head"><h2>Распределение по категориям</h2><div class="sum-pct">Всего: <b id="advancePctTotal">100%</b></div></div>
+        <div class="alloc-head"><h2>Распределение по категориям</h2><div class="sum-pct"><span id="advancePctTotalLabel">Всего:</span> <b id="advancePctTotal">100%</b></div></div>
         <div class="donut-wrap"><div class="donut" id="advanceDonut" role="img" aria-label="Диаграмма распределения дополнительного дохода"></div><div class="donut-legend" id="advanceLegend"></div></div>
         <details class="allocation-collapse" id="advanceAccounts"><summary class="allocation-toggle"><span>Счета и категории</span><span class="allocation-toggle-meta">Настроить названия и проценты</span><span class="toggle-icon" aria-hidden="true"></span></summary><div class="allocation-content"><div id="advanceAllocations"></div><div class="actions"><button id="addAdvanceCategoryBtn" class="ghost" type="button">＋ Добавить категорию</button><button id="balanceAdvanceCategoriesBtn" class="ghost" type="button">Распределить поровну</button></div><div class="actions category-save-row"><button class="primary" id="saveAdvanceBtn">Сохранить доход</button></div></div></details>
         <div class="summary"><div><div class="label">Останется нераспределённым</div><div style="font-size:11px;color:var(--muted)">Если проценты не составляют 100%</div></div><strong id="advanceUnallocated">0 ₽</strong></div>
@@ -1400,7 +1447,7 @@ details.panel.collapsible:not([open]) .section-hint{font-size:9px !important;lin
     </div>
   </div>
   <details class="panel tools-panel collapsible" id="goalSection">
-    <summary class="section-toggle"><span><span class="section-number">03</span><span class="section-title">Цель накоплений</span><span class="section-hint">Отслеживай прогресс накоплений</span></span><span class="toggle-icon" aria-hidden="true"></span></summary>
+    <summary class="section-toggle"><span><span class="section-number">03</span><span class="section-title">Цель накоплений</span><span class="section-hint" id="goalSummaryHint">Отслеживай прогресс накоплений</span></span><span class="toggle-icon" aria-hidden="true"></span></summary>
     <div class="section-content">
     <p class="smallnote">Задай цель и отмечай, сколько уже отложено. Данные остаются на этом устройстве.</p>
     <div class="goal-grid">
@@ -1418,11 +1465,13 @@ details.panel.collapsible:not([open]) .section-hint{font-size:9px !important;lin
     <details class="panel collapsible">
       <summary class="section-toggle"><span><span class="section-number">04</span><span class="section-title">Статистика</span><span class="section-hint">Итоги сохранённых выплат</span></span><span class="toggle-icon" aria-hidden="true"></span></summary>
       <div class="section-content">
-      <div class="summary"><div class="label">Сохранено распределений основного дохода</div><strong id="salaryHistoryCount">0</strong></div>
-      <div class="summary"><div class="label">Сумма основного дохода в истории</div><strong id="salaryHistoryTotal">0 ₽</strong></div>
-      <div class="summary"><div class="label">Сохранено распределений дополнительного дохода</div><strong id="advanceHistoryCount">0</strong></div>
-      <div class="summary"><div class="label">Сумма дополнительного дохода в истории</div><strong id="advanceHistoryTotal">0 ₽</strong></div>
-      <div class="smallnote" id="monthlySummary">Сохраняй распределения, чтобы собирать статистику.</div>
+      <div class="stats-grid">
+      <div class="stats-metric"><span>Основной доход · записей</span><strong id="salaryHistoryCount">0</strong></div>
+      <div class="stats-metric"><span>Основной доход · сумма</span><strong id="salaryHistoryTotal">0 ₽</strong></div>
+      <div class="stats-metric"><span>Дополнительный · записей</span><strong id="advanceHistoryCount">0</strong></div>
+      <div class="stats-metric"><span>Дополнительный · сумма</span><strong id="advanceHistoryTotal">0 ₽</strong></div>
+      </div>
+      <div class="smallnote monthly-summary" id="monthlySummary">Сохраняй распределения, чтобы собирать статистику.</div>
       </div>
     </details>
     <details class="panel collapsible">
@@ -1476,6 +1525,7 @@ function renderGoal(){
  const target=Math.max(0,Number(goal.target)||0),saved=Math.max(0,Number(goal.saved)||0),pct=target?Math.min(100,Math.round(saved/target*100)):0;
  $('goalProgressFill').style.width=pct+'%';$('goalProgressAmount').textContent=target?pct+'%':'0%';
  $('goalProgressLabel').textContent=target?(saved>=target?'Цель достигнута':`Осталось накопить ${money(target-saved)}`):'Укажи цель, чтобы увидеть прогресс';
+ const goalHint=$('goalSummaryHint');if(goalHint)goalHint.textContent=target?`${goal.name||'Цель'} · ${money(saved)} из ${money(target)} · ${pct}%`:'Отслеживай прогресс накоплений';
  $('goalStatus').textContent=goal.updated?'Сохранено '+goal.updated:'';
 }
 $('saveGoalBtn').addEventListener('click',()=>{
@@ -1536,7 +1586,8 @@ function render(){
  $('remaining').textContent=money(rem); $('fixedTotal').textContent=money(fixed);
  $('totalBox').classList.toggle('negative',rem<0);
  const pct=state.allocations.reduce((s,a)=>s+Math.max(0,Number(a.pct)||0),0);
- $('pctTotal').textContent=pct+'%'; $('pctTotal').style.color=pct===100?'var(--green)':'var(--red)';
+ $('pctTotal').textContent=pct===100?'100%':Math.abs(100-pct)+'%'; $('pctTotal').style.color=pct===100?'var(--green)':'var(--red)';
+ const pctLabel=$('pctTotalLabel');if(pctLabel)pctLabel.textContent=pct===100?'Распределено:':pct<100?'Осталось:':'Превышение:';
  renderDonut('salaryDonut','salaryLegend',state.allocations);
  $('allocations').innerHTML=state.allocations.map(a=>{
   const p=Math.max(0,Number(a.pct)||0), amount=allocatable*p/100;
@@ -1544,7 +1595,7 @@ function render(){
  }).join('');
  const valid=rem>=0 && pct===100;
  $('warning').style.display=rem<0||pct!==100?'block':'none';
- $('warning').textContent=rem<0?'Обязательные платежи больше зарплаты. Проверь суммы.':pct!==100?'Проценты категорий должны в сумме составлять ровно 100%.':'';
+ $('warning').textContent=rem<0?'Обязательные платежи больше основного дохода. Проверь суммы.':pct!==100?'Проценты категорий должны в сумме составлять ровно 100%.':'';
  $('checkText').textContent=valid?'Процентные счета распределены':'Проверь суммы и проценты';
  $('checkAmount').textContent=money(allocatable); $('checkAmount').style.color=valid?'var(--green)':'var(--red)';
  $('saveBtn').disabled=!valid; $('saveBtn').style.opacity=valid?'1':'.45';
@@ -1576,9 +1627,9 @@ function renderHistory(){
  renderStats();
  if(!history.length){$('historyList').className='history-empty';$('historyList').textContent='Пока нет сохранённых распределений.';return}
  $('historyList').className='';
- $('historyList').innerHTML=history.slice(0,8).map((h,i)=>`<div class="history-row"><div><b>${h.date}</b><br><span>Основной доход ${money(h.salary)}</span></div><div><b>${money(h.remaining)}</b><br><span>к распределению</span></div><button class="ghost" data-remove="${i}" style="padding:5px 8px">×</button></div>`).join('');
+ $('historyList').innerHTML=history.slice(0,8).map((h,i)=>`<div class="history-row"><div><b>${h.date}</b><br><span>Основной доход ${money(h.salary)}</span></div><div><b>${money(h.remaining)}</b><br><span>к распределению</span></div><button class="ghost" data-remove="${i}" aria-label="Удалить запись от ${h.date}" title="Удалить запись">×</button></div>`).join('');
 }
-$('historyList').addEventListener('click',e=>{const i=e.target.dataset.remove;if(i!==undefined){history.splice(Number(i),1);persist();renderHistory()}});
+$('historyList').addEventListener('click',e=>{const i=e.target.dataset.remove;if(i!==undefined){const record=history[Number(i)];if(!record||!confirm('Удалить сохранённое распределение от '+record.date+'?'))return;history.splice(Number(i),1);persist();renderHistory()}});
 $('clearHistory').addEventListener('click',()=>{if(confirm('Удалить всю историю распределений?')){history=[];persist();renderHistory()}});
 $('resetBtn').addEventListener('click',()=>{if(confirm('Сбросить суммы и проценты к исходным значениям?')){state=structuredClone(defaults);['salary','credit','mortgage','other'].forEach(k=>$(k).value=state[k]);persist();render()}});
 $('copyBtn').addEventListener('click',async()=>{
@@ -1614,8 +1665,9 @@ function renderAdvance(){
  renderDonut('advanceDonut','advanceLegend',advanceAllocations);
  $('advanceRemaining').textContent=money(amount);
  const pct=advanceAllocations.reduce((s,a)=>s+Math.max(0,Number(a.pct)||0),0);
- $('advancePctTotal').textContent=pct+'%';
+ $('advancePctTotal').textContent=pct===100?'100%':Math.abs(100-pct)+'%';
  $('advancePctTotal').style.color=pct===100?'var(--green)':'var(--red)';
+ const advancePctLabel=$('advancePctTotalLabel');if(advancePctLabel)advancePctLabel.textContent=pct===100?'Распределено:':pct<100?'Осталось:':'Превышение:';
  $('advanceAllocations').innerHTML=advanceAllocations.map(a=>{
    const p=Math.max(0,Number(a.pct)||0);
    return `<div class="item"><div class="itemtop"><div class="itemname"><i class="dot" style="background:${a.color}"></i><input class="name-input" aria-label="Название категории аванса" data-advance-name="${a.id}" type="text" maxlength="40" value="${a.name.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;")}"></div><div class="amount">${money(amount*p/100)}</div><button class="ghost remove-item" type="button" data-delete-advance="${a.id}" aria-label="Удалить категорию">×</button></div><div class="subrow"><div class="bar"><div class="fill" style="width:${Math.min(100,p)}%;background:${a.color}"></div></div>${percentWheel(a.id,p,'advance',a.name)}</div></div>`;
