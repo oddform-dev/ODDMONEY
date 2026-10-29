@@ -1,4 +1,4 @@
-const CACHE_NAME = 'oddmoney-v32';
+const CACHE_NAME = 'oddmoney-v33';
 const APP_SHELL = [
   './',
   './index.html',
