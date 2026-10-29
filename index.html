@@ -1170,6 +1170,35 @@ body.dark-theme .alloc-head .sum-pct b{
  #allocations .item,#advanceAllocations .item{transition:none !important}
 }
 
+
+/* Calm, compact hierarchy for totals, actions and saved history */
+#salaryView .summary,#advanceView .summary{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 0;margin:0;border-bottom:1px solid var(--line)}
+#salaryView .summary .label,#advanceView .summary .label{font-size:12px;line-height:1.35;font-weight:650;color:var(--text)}
+#salaryView .summary .label+div,#advanceView .summary .label+div{font-size:10px!important;line-height:1.4;margin-top:3px;color:var(--muted)!important}
+#salaryView .summary strong,#advanceView .summary strong{flex:0 0 auto;font-size:16px;line-height:1.2;font-weight:800;font-variant-numeric:tabular-nums}
+#salaryView > .actions,#advanceView > .actions{display:flex;gap:8px;margin:14px 0 18px}
+#salaryView > .actions button,#advanceView > .actions button{min-height:38px;padding:9px 12px;font-size:12px;border-radius:10px}
+#salaryView .history,#advanceView .history{margin-top:18px;padding-top:4px;border-top:1px solid var(--line)}
+#salaryView .history .alloc-head,#advanceView .history .alloc-head{margin:12px 0 8px;align-items:center}
+#salaryView .history .alloc-head h2,#advanceView .history .alloc-head h2{font-size:14px;line-height:1.3}
+#salaryView #historyList,#advanceView #advanceHistoryList{display:grid;gap:7px}
+#salaryView .history-row,#advanceView .history-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,auto) 30px;gap:10px;align-items:center;padding:10px;margin:0;border:1px solid var(--line)!important;border-radius:11px;background:var(--panel);font-size:12px}
+#salaryView .history-row b,#advanceView .history-row b{display:inline-block;font-size:12px;line-height:1.3;font-weight:800}
+#salaryView .history-row span,#advanceView .history-row span{display:inline-block;margin-top:3px;font-size:10px;line-height:1.35;color:var(--muted)!important}
+#salaryView .history-row button,#advanceView .history-row button{width:28px;height:30px;padding:0;border-radius:8px;font-size:15px;line-height:1;color:var(--muted)}
+body:not(.dark-theme) #salaryView .history-row,body:not(.dark-theme) #advanceView .history-row{background:#fbf9fd;border-color:#ece7f1!important}
+body.dark-theme #salaryView .history-row,body.dark-theme #advanceView .history-row{background:#15161e;border-color:#2b2d38!important}
+@media(max-width:600px){
+ #salaryView .summary,#advanceView .summary{padding:10px 0;gap:8px}
+ #salaryView .summary .label,#advanceView .summary .label{font-size:11px}
+ #salaryView .summary strong,#advanceView .summary strong{font-size:14px}
+ #salaryView > .actions,#advanceView > .actions{gap:7px;flex-wrap:wrap}
+ #salaryView > .actions button,#advanceView > .actions button{flex:1 1 auto;font-size:11px;padding:8px 9px}
+ #salaryView .history-row,#advanceView .history-row{grid-template-columns:minmax(0,1fr) minmax(0,auto) 28px;gap:7px;padding:9px 8px}
+ #salaryView .history-row b,#advanceView .history-row b{font-size:11px}
+ #salaryView .history-row span,#advanceView .history-row span{font-size:9px}
+}
+
 </style>
 </head>
 <body>
