@@ -924,6 +924,94 @@ body.dark-theme .alloc-head .sum-pct b{
   body.dark-theme #advanceView .total strong{color:#fff !important}
 }
 
+
+/* Mobile: keep the brand gradient, but reserve a clean text zone on the left */
+@media(max-width:600px){
+  #totalBox,
+  #advanceView .total{
+    position:relative !important;
+    overflow:hidden !important;
+    height:auto !important;
+    min-height:122px !important;
+    padding:20px 18px !important;
+    gap:10px !important;
+  }
+  #totalBox:before,
+  #advanceView .total:before{
+    display:block !important;
+    content:"" !important;
+    position:absolute !important;
+    z-index:0 !important;
+    width:126px !important;
+    height:126px !important;
+    right:-32px !important;
+    top:-8px !important;
+    border-radius:50% !important;
+    background:linear-gradient(135deg,#e94ab8 0%,#895cf6 100%) !important;
+    opacity:1 !important;
+  }
+  #totalBox:after,
+  #advanceView .total:after{
+    display:block !important;
+    content:"" !important;
+    position:absolute !important;
+    z-index:0 !important;
+    width:52px !important;
+    height:52px !important;
+    right:14px !important;
+    top:28px !important;
+    border-radius:50% !important;
+    background:#ffffff20 !important;
+  }
+  #totalBox .label,
+  #advanceView .total .label{
+    position:relative !important;
+    z-index:2 !important;
+    display:block !important;
+    width:72% !important;
+    max-width:72% !important;
+    font-size:9px !important;
+    line-height:1.45 !important;
+    letter-spacing:.055em !important;
+    overflow-wrap:normal !important;
+    word-break:normal !important;
+  }
+  #totalBox strong,
+  #advanceView .total strong{
+    position:relative !important;
+    z-index:2 !important;
+    display:block !important;
+    width:72% !important;
+    max-width:72% !important;
+    font-size:clamp(29px,7.8vw,35px) !important;
+    line-height:1.08 !important;
+    letter-spacing:-.045em !important;
+    white-space:nowrap;
+  }
+  body:not(.dark-theme) #totalBox,
+  body:not(.dark-theme) #advanceView .total{
+    background:linear-gradient(105deg,#ffffff 0%,#fbf8ff 72%,#f5eaff 100%) !important;
+    color:#211b2b !important;
+    border:1px solid #e9e1f0 !important;
+    box-shadow:0 8px 24px #26182f0d !important;
+  }
+  body:not(.dark-theme) #totalBox .label,
+  body:not(.dark-theme) #advanceView .total .label{color:#777081 !important}
+  body:not(.dark-theme) #totalBox strong,
+  body:not(.dark-theme) #advanceView .total strong{color:#211b2b !important}
+  body.dark-theme #totalBox,
+  body.dark-theme #advanceView .total{
+    background:linear-gradient(105deg,#211b2b 0%,#211b2b 72%,#39223d 100%) !important;
+    color:#fff !important;
+    border:1px solid #3b3348 !important;
+    box-shadow:none !important;
+  }
+  body.dark-theme #totalBox .label,
+  body.dark-theme #advanceView .total .label{color:#e0d6e7 !important}
+  body.dark-theme #totalBox strong,
+  body.dark-theme #advanceView .total strong{color:#fff !important}
+}
+
 </style>
 </head>
 <body>
