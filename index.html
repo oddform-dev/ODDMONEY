@@ -1237,6 +1237,21 @@ body.dark-theme #salaryView .history-row,body.dark-theme #advanceView .history-r
 .pct-wheel .wheel-row.wheel-current strong{font-size:15px;font-weight:850}
 .pct-wheel .wheel-row.wheel-current span{font-size:9px;color:var(--muted)}
 .pct-wheel-popover{overscroll-behavior:contain}
+#allocations .item,#advanceAllocations .item{overflow:visible;padding:10px 0!important}
+#allocations .subrow,#advanceAllocations .subrow{gap:9px;margin-top:7px;align-items:center}
+#allocations .itemtop,#advanceAllocations .itemtop{gap:8px}
+#allocations .amount,#advanceAllocations .amount{font-size:15px}
+#allocations .name-input,#advanceAllocations .name-input{font-size:13px;padding:6px 7px}
+#allocations .bar,#advanceAllocations .bar{height:5px}
+#allocations .remove-item,#advanceAllocations .remove-item{padding:5px 7px}
+.allocation-collapse[open],.allocation-content{overflow:visible!important}
+@media(max-width:600px){
+ .pct-wheel{height:110px!important}
+ .pct-wheel-popover{width:52px}
+ #allocations .item,#advanceAllocations .item{padding:9px 0!important}
+ #allocations .amount,#advanceAllocations .amount{font-size:13px}
+ #allocations .name-input,#advanceAllocations .name-input{font-size:12px}
+}
 
 /* Truly compact collapsed utility sections */
 details.panel.collapsible:not([open]){
@@ -1744,6 +1759,8 @@ function enablePercentWheel(containerId){
  container.addEventListener('scroll',e=>{
    const wheel=e.target.closest('.pct-wheel');
    if(!wheel)return;
+   const centered=Math.max(0,Math.min(100,Math.round(wheel.scrollTop/22)));
+   wheel.querySelectorAll('.wheel-row').forEach(row=>row.classList.toggle('wheel-current',Number(row.dataset.wheelValue)===centered));
    clearTimeout(wheel._settleTimer);
    wheel._settleTimer=setTimeout(()=>{
      const value=Math.max(0,Math.min(100,Math.round(wheel.scrollTop/22)));
