@@ -127,6 +127,31 @@ button:disabled{cursor:not-allowed;filter:grayscale(.2)}
 .section-content>.smallnote:first-child{margin-top:16px}
 .collapsible .section-content .summary:first-of-type{margin-top:4px}
 @media(max-width:780px){.section-toggle{padding:16px}.section-content{padding:0 16px 17px}.section-hint{max-width:240px}}
+/* Dashboard polish */
+.layout{align-items:start;gap:18px}
+#totalBox{padding:23px 22px;border-radius:18px;background:radial-gradient(ellipse at 100% 0%,#a3f2c41a,transparent 48%),linear-gradient(135deg,#202f39,#17232c 78%);border-color:#3b514e;box-shadow:inset 0 1px #ffffff0a,0 12px 26px #0002}
+#totalBox .label{text-transform:uppercase;letter-spacing:.09em;font-size:10px;font-weight:800;color:#b2c2cc}
+#totalBox strong{font-size:clamp(32px,4vw,42px);font-weight:800;letter-spacing:-.065em;margin-top:9px}
+.alloc-head h2{letter-spacing:-.035em}
+.donut-wrap{display:grid;grid-template-columns:124px minmax(0,1fr);gap:19px;padding:16px;background:linear-gradient(135deg,#111820,#0e141a);border-color:#2e3b46}
+.donut-legend{gap:10px}
+.legend-row{display:grid;grid-template-columns:8px minmax(0,1fr) auto;gap:8px;font-size:11px}
+.legend-row span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.allocation-collapse,.income-collapse{border-color:#2c3945;border-radius:15px;background:#11171e}
+.allocation-toggle,.income-toggle{padding:13px 14px;background:linear-gradient(100deg,#18212a,#121920)}
+.allocation-content,.income-content{padding-left:14px;padding-right:14px}
+.allocation-content .item{padding:13px 0;border-bottom:1px solid #27323d}
+.allocation-content .item:last-child{border-bottom:0}
+.allocation-content .name-input{background:#151e27;border-color:#2b3945}
+.allocation-content .amount{font-size:15px}
+.tabs{width:min(100%,520px);margin-bottom:20px}
+.tab{font-weight:750;letter-spacing:-.02em}
+.tab:not(.active){color:#a8b5c2}
+.field label{letter-spacing:.025em}
+input{font-variant-numeric:tabular-nums}
+button{min-height:39px}
+.section-number{background:#a3f2c41a;box-shadow:inset 0 0 0 1px #a3f2c41a}
+@media(max-width:780px){.layout{gap:12px}#totalBox{padding:20px 18px}#totalBox strong{font-size:34px}.donut-wrap{grid-template-columns:94px minmax(0,1fr);gap:13px;padding:12px}.donut{width:94px;height:94px;flex-basis:94px}.donut:after{inset:17px}.donut-legend{gap:7px}.legend-row{gap:6px;font-size:10px}.allocation-content,.income-content{padding-left:11px;padding-right:11px}}
 </style>
 </head>
 <body>
