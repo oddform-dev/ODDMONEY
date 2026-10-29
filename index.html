@@ -1221,6 +1221,71 @@ body.dark-theme #salaryView .history-row,body.dark-theme #advanceView .history-r
   .top-actions .pill{font-size:10px !important;padding:7px 9px !important}
 }
 
+
+/* iOS-style percentage wheel picker */
+.pct-wheel{
+  width:58px;height:78px;flex:0 0 58px;overflow:hidden;position:relative;
+  display:flex;flex-direction:column;align-items:stretch;justify-content:center;
+  border:1px solid var(--line);border-radius:12px;
+  background:var(--panel);color:var(--text);cursor:ns-resize;touch-action:pan-x;
+  user-select:none;-webkit-user-select:none;outline:none;
+  box-shadow:inset 0 1px 0 #ffffff12;
+}
+.pct-wheel:focus-visible{box-shadow:0 0 0 2px #d94fc4}
+.pct-wheel:before{
+  content:"";position:absolute;left:4px;right:4px;top:27px;height:24px;
+  border-radius:7px;background:linear-gradient(100deg,#e947c21b,#9655f51b);pointer-events:none;
+}
+.wheel-neighbor,.wheel-current{
+  height:24px;min-height:24px;display:flex;align-items:center;justify-content:center;
+  position:relative;line-height:1;transition:transform .12s ease,opacity .12s ease;
+}
+.wheel-neighbor{font-size:11px;color:var(--muted);opacity:.55}
+.wheel-current{gap:2px;font-size:16px;font-weight:850;font-variant-numeric:tabular-nums}
+.wheel-current strong{font-size:16px;font-weight:850}
+.wheel-current span{font-size:9px;color:var(--muted);align-self:center}
+.pct-wheel.is-dragging .wheel-neighbor,
+.pct-wheel.is-dragging .wheel-current{transform:translateY(var(--drag-y,0px));transition:none}
+body:not(.dark-theme) .pct-wheel{background:#fbf9fd;border-color:#e8e1ed;color:#211b2b}
+body.dark-theme .pct-wheel{background:#111219;border-color:#343541;color:#f4f2f7}
+.subrow{align-items:center}
+@media(max-width:600px){
+ .pct-wheel{width:52px;flex-basis:52px;height:72px;border-radius:11px}
+ .pct-wheel:before{top:24px;height:22px}
+ .wheel-neighbor,.wheel-current{height:22px;min-height:22px}
+ .wheel-current,.wheel-current strong{font-size:15px}
+}
+@media(prefers-reduced-motion:reduce){
+ .wheel-neighbor,.wheel-current{transition:none}
+}
+/* Truly compact collapsed utility sections */
+details.panel.collapsible:not([open]){
+  padding:0 !important;
+  min-height:0 !important;
+  height:auto !important;
+}
+details.panel.collapsible:not([open])>.section-toggle{
+  min-height:52px !important;
+  height:auto !important;
+  padding:10px 14px !important;
+  margin:0 !important;
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+}
+details.panel.collapsible:not([open])>.section-toggle>span:first-child{
+  display:grid;grid-template-columns:28px minmax(0,1fr);align-items:center;
+  column-gap:9px;row-gap:2px;min-width:0;
+}
+details.panel.collapsible:not([open]) .section-number{
+  grid-row:1 / span 2;width:26px !important;height:26px !important;font-size:9px;
+}
+details.panel.collapsible:not([open]) .section-title{font-size:12px !important;line-height:1.2}
+details.panel.collapsible:not([open]) .section-hint{font-size:9px !important;line-height:1.2;margin:0 !important}
+@media(max-width:600px){
+ details.panel.collapsible:not([open])>.section-toggle{min-height:48px !important;padding:8px 11px !important}
+ details.panel.collapsible:not([open])>.section-toggle>span:first-child{grid-template-columns:25px minmax(0,1fr);column-gap:7px}
+ details.panel.collapsible:not([open]) .section-number{width:24px !important;height:24px !important}
+}
+
 </style>
 </head>
 <body>
@@ -1421,7 +1486,7 @@ function render(){
  renderDonut('salaryDonut','salaryLegend',state.allocations);
  $('allocations').innerHTML=state.allocations.map(a=>{
   const p=Math.max(0,Number(a.pct)||0), amount=allocatable*p/100;
-  return `<div class="item"><div class="itemtop"><div class="itemname"><i class="dot" style="background:${a.color}"></i><input class="name-input" aria-label="Название категории" data-name="${a.id}" type="text" maxlength="40" value="${a.name.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;")}"></div><div class="amount">${money(amount)}</div><button class="ghost remove-item" type="button" data-delete="${a.id}" aria-label="Удалить категорию">×</button></div><div class="subrow"><div class="bar"><div class="fill" style="width:${Math.min(100,p)}%;background:${a.color}"></div></div><label class="pct"><input aria-label="Процент ${a.name}" data-pct="${a.id}" type="number" min="0" max="100" step="1" value="${p}"> %</label></div></div>`
+  return `<div class="item"><div class="itemtop"><div class="itemname"><i class="dot" style="background:${a.color}"></i><input class="name-input" aria-label="Название категории" data-name="${a.id}" type="text" maxlength="40" value="${a.name.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;")}"></div><div class="amount">${money(amount)}</div><button class="ghost remove-item" type="button" data-delete="${a.id}" aria-label="Удалить категорию">×</button></div><div class="subrow"><div class="bar"><div class="fill" style="width:${Math.min(100,p)}%;background:${a.color}"></div></div>${percentWheel(a.id,p,'salary',a.name)}</div></div>`
  }).join('');
  const valid=rem>=0 && pct===100;
  $('warning').style.display=rem<0||pct!==100?'block':'none';
@@ -1497,7 +1562,7 @@ function renderAdvance(){
  $('advancePctTotal').style.color=pct===100?'var(--green)':'var(--red)';
  $('advanceAllocations').innerHTML=advanceAllocations.map(a=>{
    const p=Math.max(0,Number(a.pct)||0);
-   return `<div class="item"><div class="itemtop"><div class="itemname"><i class="dot" style="background:${a.color}"></i><input class="name-input" aria-label="Название категории аванса" data-advance-name="${a.id}" type="text" maxlength="40" value="${a.name.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;")}"></div><div class="amount">${money(amount*p/100)}</div><button class="ghost remove-item" type="button" data-delete-advance="${a.id}" aria-label="Удалить категорию">×</button></div><div class="subrow"><div class="bar"><div class="fill" style="width:${Math.min(100,p)}%;background:${a.color}"></div></div><label class="pct"><input aria-label="Процент аванса ${a.name}" data-advance-pct="${a.id}" type="number" min="0" max="100" step="1" value="${p}"> %</label></div></div>`;
+   return `<div class="item"><div class="itemtop"><div class="itemname"><i class="dot" style="background:${a.color}"></i><input class="name-input" aria-label="Название категории аванса" data-advance-name="${a.id}" type="text" maxlength="40" value="${a.name.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;")}"></div><div class="amount">${money(amount*p/100)}</div><button class="ghost remove-item" type="button" data-delete-advance="${a.id}" aria-label="Удалить категорию">×</button></div><div class="subrow"><div class="bar"><div class="fill" style="width:${Math.min(100,p)}%;background:${a.color}"></div></div>${percentWheel(a.id,p,'advance',a.name)}</div></div>`;
  }).join('');
  $('advanceUnallocated').textContent=money(amount*Math.max(0,100-pct)/100);
  const valid=pct===100;
@@ -1625,6 +1690,66 @@ function enableCategorySwipe(containerId, mode){
 }
 enableCategorySwipe('allocations','salary');
 enableCategorySwipe('advanceAllocations','advance');
+
+function percentWheel(id,value,mode,name){
+ const p=Math.max(0,Math.min(100,Number(value)||0));
+ const prev=p>0?p-1:'';
+ const next=p<100?p+1:'';
+ return `<div class="pct-wheel" data-wheel-id="${id}" data-wheel-mode="${mode}" role="spinbutton" tabindex="0" aria-label="Процент ${escapeHtml(name)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${p}">
+   <div class="wheel-neighbor">${prev}</div>
+   <div class="wheel-current"><strong>${p}</strong><span>%</span></div>
+   <div class="wheel-neighbor">${next}</div>
+ </div>`;
+}
+function setWheelPercent(mode,id,delta){
+ const list=mode==='salary'?state.allocations:advanceAllocations;
+ const item=list.find(x=>x.id===id);
+ if(!item)return;
+ item.pct=Math.max(0,Math.min(100,(Number(item.pct)||0)+delta));
+ if(mode==='salary'){persist();render()}else{persistAdvance();renderAdvance()}
+}
+function enablePercentWheel(containerId){
+ const container=$(containerId);
+ if(!container)return;
+ let active=null,startY=0,lastY=0,dragging=false;
+ container.addEventListener('wheel',e=>{
+   const wheel=e.target.closest('.pct-wheel');if(!wheel)return;
+   e.preventDefault();
+   const delta=e.deltaY>0?1:-1;
+   setWheelPercent(wheel.dataset.wheelMode,wheel.dataset.wheelId,delta);
+ },{passive:false});
+ container.addEventListener('keydown',e=>{
+   const wheel=e.target.closest('.pct-wheel');if(!wheel)return;
+   let delta=0;if(e.key==='ArrowUp')delta=1;else if(e.key==='ArrowDown')delta=-1;else return;
+   e.preventDefault();setWheelPercent(wheel.dataset.wheelMode,wheel.dataset.wheelId,delta);
+ });
+ container.addEventListener('touchstart',e=>{
+   const wheel=e.target.closest('.pct-wheel');if(!wheel)return;
+   active=wheel;startY=e.touches[0].clientY;lastY=startY;dragging=true;
+   wheel.classList.add('is-dragging');
+ },{passive:true});
+ container.addEventListener('touchmove',e=>{
+   if(!dragging||!active)return;
+   lastY=e.touches[0].clientY;
+   const delta=lastY-startY;
+   active.style.setProperty('--drag-y',Math.max(-28,Math.min(28,delta))+'px');
+ },{passive:true});
+ container.addEventListener('touchend',()=>{
+   if(!dragging||!active)return;
+   const wheel=active,delta=lastY-startY;
+   wheel.classList.remove('is-dragging');wheel.style.removeProperty('--drag-y');
+   active=null;dragging=false;
+   const steps=Math.max(-20,Math.min(20,Math.round(-delta/20)));
+   if(steps)setWheelPercent(wheel.dataset.wheelMode,wheel.dataset.wheelId,steps);
+ },{passive:true});
+ container.addEventListener('touchcancel',()=>{
+   if(active){active.classList.remove('is-dragging');active.style.removeProperty('--drag-y')}
+   active=null;dragging=false;
+ },{passive:true});
+}
+enablePercentWheel('allocations');
+enablePercentWheel('advanceAllocations');
+
 </script>
 <script>
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
