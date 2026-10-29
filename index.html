@@ -165,7 +165,6 @@ $('csvBtn').addEventListener('click',()=>{
  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));a.download='kuda-babki-history.csv';a.click();URL.revokeObjectURL(a.href);
 });
 load();
-loadAdvance();
 
 const advanceDefaults = [
  {id:'shared',name:'Общий счёт',pct:45,color:'#f1c27d'},
@@ -247,7 +246,7 @@ $('copyAdvanceBtn').addEventListener('click',async()=>{
  const txt=lines.join('\n');
  try{await navigator.clipboard.writeText(txt);$('copyAdvanceBtn').textContent='Скопировано ✓';setTimeout(()=>$('copyAdvanceBtn').textContent='Скопировать план аванса',1300)}catch(e){prompt('Скопируй план:',txt)}
 });
-
+loadAdvance();
 </script>
 <script>
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
