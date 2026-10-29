@@ -342,13 +342,63 @@ button.ghost{background:transparent}
  .tab{padding:11px 8px;font-size:11px}
 }
 
+
+/* Theme switch */
+.top-actions{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.theme-toggle{width:38px;height:38px;padding:0;display:grid;place-items:center;border-radius:50%;font-size:17px;line-height:1;background:#fff;border:1px solid #e7e4ec;color:#28232e;box-shadow:0 3px 12px #24162a08}
+.theme-toggle:hover{background:#f5f0fa;border-color:#d9cce7;transform:translateY(-1px)}
+.theme-icon{display:block;transform:translateY(-1px)}
+body.dark-theme{
+ --bg:#0d0e12;--panel:#15171e;--panel2:#1c1e27;--text:#f4f2f7;
+ --muted:#a09bab;--line:#2b2d38;--green:#d2ff72;--blue:#a8c7ff;
+ --amber:#f5c879;--purple:#c5a5ff;--red:#ff8998;
+ color-scheme:dark;background:var(--bg);color:var(--text)
+}
+body.dark-theme .sub{color:#a09bab}
+body.dark-theme .pill{background:#15171e;border-color:#30313c;color:#aaa5b5}
+body.dark-theme .theme-toggle{background:#1a1c24;border-color:#343541;color:#f1eef6}
+body.dark-theme .theme-toggle:hover{background:#252732;border-color:#4a4c5c}
+body.dark-theme .panel{background:#15171e;border-color:#2b2d38;box-shadow:none}
+body.dark-theme .panel:hover{border-color:#414350;box-shadow:none}
+body.dark-theme h2{color:#f0edf5}
+body.dark-theme input{background:#0f1015;border-color:#333541;color:#f4f2f7}
+body.dark-theme input:focus{background:#11131a;border-color:var(--green);box-shadow:0 0 0 4px #d2ff7212}
+body.dark-theme .money-input{background:#101117}
+body.dark-theme .total{background:linear-gradient(135deg,#292133,#1a1b25);color:#fff;border:1px solid #3b3348;box-shadow:none}
+body.dark-theme .total:before{background:linear-gradient(135deg,#e94ab8,#895cf6);opacity:.35}
+body.dark-theme .total:after{background:#ffffff08}
+body.dark-theme .total .label{color:#c8c1d1}
+body.dark-theme .total strong{color:#fff}
+body.dark-theme .total.negative{background:#2c1a22}
+body.dark-theme .sum-pct{background:#111219;border-color:#343541;color:#aaa5b5}
+body.dark-theme .donut-wrap{background:#101117;border-color:#2b2d38}
+body.dark-theme .donut:after{background:#101117}
+body.dark-theme .legend-row b,body.dark-theme .amount,body.dark-theme .summary strong{color:#f0edf5}
+body.dark-theme .item{border-bottom-color:#292b35}
+body.dark-theme .name-input{color:#f0edf5}
+body.dark-theme .name-input:hover,body.dark-theme .name-input:focus{background:#101117;border-color:#343541}
+body.dark-theme .bar,body.dark-theme .goal-progress{background:#30313b}
+body.dark-theme .tabs{background:#101117;border-color:#2b2d38}
+body.dark-theme .tab{color:#a09bab}
+body.dark-theme .tab:hover{background:#1a1c24}
+body.dark-theme .tab.active{background:#23252e;color:#f4f2f7;box-shadow:none}
+body.dark-theme button{background:#1b1d26;color:#f0edf5;border-color:#343541}
+body.dark-theme button:hover{background:#252733;border-color:#4a4c5c}
+body.dark-theme button.primary{background:linear-gradient(110deg,#e94ab8,#895cf6);border-color:transparent;color:white}
+body.dark-theme button.ghost{background:transparent}
+body.dark-theme .warning{background:#261519;border-color:#5a303a}
+body.dark-theme .summary,body.dark-theme .history-row{border-bottom-color:#292b35}
+body.dark-theme .footer{color:#777483}
+body.dark-theme .pct input{background:#101117;border-color:#343541;color:#f0edf5}
+@media(max-width:700px){.top-actions{margin-top:14px;justify-content:flex-start}.theme-toggle{width:36px;height:36px}}
+
 </style>
 </head>
 <body>
 <div class="wrap">
   <header class="top">
     <div><div class="eyebrow">ODDFORM · PERSONAL FINANCE</div><h1>ODDMONEY<span style="color:var(--green)">.</span></h1><div class="sub">Распределяй доход, учитывай обязательные платежи и двигайся к финансовым целям. Настрой бюджет под себя: добавляй, переименовывай и удаляй категории.</div></div>
-    <div class="pill">● Работает без интернета</div>
+    <div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Включить тёмную тему" title="Сменить тему"><span class="theme-icon" aria-hidden="true">☾</span></button><div class="pill">● Работает без интернета</div></div>
   </header>
   <nav class="tabs" aria-label="Тип выплаты">
     <button class="tab active" id="salaryTab" type="button">Основная зарплата</button>
@@ -697,5 +747,32 @@ if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.
   });
 }
 </script>
+
+<script>
+(function(){
+  try {
+    if (localStorage.getItem('oddmoney-theme') === 'dark') document.body.classList.add('dark-theme');
+  } catch(e) {}
+  function syncThemeButton(){
+    const btn=document.getElementById('themeToggle');
+    if(!btn)return;
+    const dark=document.body.classList.contains('dark-theme');
+    btn.querySelector('.theme-icon').textContent=dark?'☀':'☾';
+    btn.setAttribute('aria-label',dark?'Включить светлую тему':'Включить тёмную тему');
+    btn.setAttribute('title',dark?'Светлая тема':'Тёмная тема');
+  }
+  document.addEventListener('DOMContentLoaded',function(){
+    syncThemeButton();
+    const btn=document.getElementById('themeToggle');
+    if(!btn)return;
+    btn.addEventListener('click',function(){
+      document.body.classList.toggle('dark-theme');
+      try{localStorage.setItem('oddmoney-theme',document.body.classList.contains('dark-theme')?'dark':'light')}catch(e){}
+      syncThemeButton();
+    });
+  });
+})();
+</script>
+
 </body>
 </html>
