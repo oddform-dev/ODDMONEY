@@ -1765,7 +1765,19 @@ function setWheelPercent(mode,id,delta){
  const item=list.find(x=>x.id===id);
  if(!item)return;
  item.pct=Math.max(0,Math.min(100,(Number(item.pct)||0)+delta));
+ const selectedValue=item.pct;
  if(mode==='salary'){persist();render()}else{persistAdvance();renderAdvance()}
+ // Rendering replaces the wheel DOM. Keep it open and restore the scroll
+ // position to the selected value instead of jumping back to zero.
+ if(openPercentWheel===mode+':'+id){
+   const container=$(mode==='salary'?'allocations':'advanceAllocations');
+   setTimeout(()=>{
+     const wheel=container&&container.querySelector('.pct-wheel[data-wheel-id="'+id+'"]');
+     if(!wheel)return;
+     wheel.scrollTop=selectedValue*22;
+     wheel.querySelectorAll('.wheel-row').forEach(row=>row.classList.toggle('wheel-current',Number(row.dataset.wheelValue)===selectedValue));
+   },0);
+ }
 }
 function enablePercentWheel(containerId){
  const container=$(containerId);
@@ -1802,7 +1814,7 @@ function enablePercentWheel(containerId){
      const item=list.find(x=>x.id===wheel.dataset.wheelId);
      if(!item||Number(item.pct)===value)return;
      setWheelPercent(wheel.dataset.wheelMode,wheel.dataset.wheelId,value-Number(item.pct||0));
-   },130);
+   },260);
  },true);
  container.addEventListener('keydown',e=>{
    const wheel=e.target.closest('.pct-wheel');if(!wheel)return;
