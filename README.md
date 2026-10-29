@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  <a href="https://oddform-dev.github.io/oddmoney/"><strong>🚀 Открыть ODDMONEY</strong></a>
+  <a href="https://oddform-dev.github.io/ODDMONEY/"><strong>🚀 Открыть ODDMONEY</strong></a>
   &nbsp;·&nbsp;
   <a href="https://github.com/oddform-dev/ODDMONEY/issues">Сообщить об ошибке</a>
 </p>
@@ -18,6 +18,8 @@
 </p>
 
 ---
+
+![ODDMONEY: светлая тема](screenshots/light-theme.png)
 
 ## Что такое ODDMONEY?
 
@@ -45,7 +47,7 @@
 
 ## Как начать
 
-1. Открой **[ODDMONEY](https://oddform-dev.github.io/oddmoney/)**.
+1. Открой **[ODDMONEY](https://oddform-dev.github.io/ODDMONEY/)**.
 2. Выбери вкладку **«Основная зарплата»** или **«Аванс»**.
 3. Введи сумму выплаты и укажи обязательные платежи, если они есть.
 4. Настрой категории и проценты распределения.
