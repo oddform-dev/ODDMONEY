@@ -490,8 +490,8 @@ body:not(.dark-theme) .allocation-collapse[open] .allocation-toggle{
     <div class="top-actions"><button class="theme-toggle" id="themeToggle" type="button" aria-label="Включить тёмную тему" title="Сменить тему"><span class="theme-icon" aria-hidden="true">☾</span></button><div class="pill">● Работает без интернета</div></div>
   </header>
   <nav class="tabs" aria-label="Тип выплаты">
-    <button class="tab active" id="salaryTab" type="button">Основная зарплата</button>
-    <button class="tab" id="advanceTab" type="button">Аванс</button>
+    <button class="tab active" id="salaryTab" type="button">Основной доход</button>
+    <button class="tab" id="advanceTab" type="button">Дополнительный</button>
   </nav>
   <div class="view" id="salaryView">
   <div class="layout">
@@ -539,13 +539,10 @@ body:not(.dark-theme) .allocation-collapse[open] .allocation-toggle{
         <div class="total"><div class="label">Весь аванс к распределению</div><strong id="advanceRemaining">25 000 ₽</strong></div>
         <div class="alloc-head"><h2>Распределение по категориям</h2><div class="sum-pct">Всего: <b id="advancePctTotal">100%</b></div></div>
         <div class="donut-wrap"><div class="donut" id="advanceDonut" role="img" aria-label="Диаграмма распределения аванса"></div><div class="donut-legend" id="advanceLegend"></div></div>
-        <div id="advanceAllocations"></div><div class="actions"><button id="addAdvanceCategoryBtn" class="ghost" type="button">＋ Добавить категорию</button><button id="balanceAdvanceCategoriesBtn" class="ghost" type="button">Распределить поровну</button></div>
+        <details class="allocation-collapse" id="advanceAccounts"><summary class="allocation-toggle"><span>Счета и категории</span><span class="allocation-toggle-meta">Настроить названия и проценты</span><span class="toggle-icon" aria-hidden="true"></span></summary><div class="allocation-content"><div id="advanceAllocations"></div><div class="actions"><button id="addAdvanceCategoryBtn" class="ghost" type="button">＋ Добавить категорию</button><button id="balanceAdvanceCategoriesBtn" class="ghost" type="button">Распределить поровну</button></div></div></details>
         <div class="summary"><div><div class="label">Останется нераспределённым</div><div style="font-size:11px;color:var(--muted)">Если проценты не составляют 100%</div></div><strong id="advanceUnallocated">0 ₽</strong></div>
+        <details class="income-collapse" id="advanceHistoryDetails"><summary class="income-toggle"><span>История авансов</span><span class="allocation-toggle-meta">Сохранённые распределения</span><span class="toggle-icon" aria-hidden="true"></span></summary><div class="income-content"><div class="actions" style="margin-top:12px"><button class="ghost" id="clearAdvanceHistory" style="padding:6px 9px;font-size:12px">Очистить историю</button></div><div id="advanceHistoryList" class="history-empty">Пока нет сохранённых авансов.</div></div></details>
         <div class="actions"><button id="copyAdvanceBtn">Скопировать план аванса</button></div>
-        <div class="history">
-          <div class="alloc-head"><h2>История авансов</h2><button class="ghost" id="clearAdvanceHistory" style="padding:6px 9px;font-size:12px">Очистить</button></div>
-          <div id="advanceHistoryList" class="history-empty">Пока нет сохранённых авансов.</div>
-        </div>
       </section>
     </div>
   </div>
