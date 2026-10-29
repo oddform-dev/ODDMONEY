@@ -1300,6 +1300,40 @@ details.panel.collapsible:not([open]) .section-hint{font-size:9px !important;lin
  .legend-row b{width:29px!important}
 }
 
+
+/* Restore compact percentage button and floating wheel popup */
+.pct-control{position:relative;z-index:2;flex:0 0 auto;display:flex;align-items:center;justify-content:center}
+.pct-display{display:flex;align-items:center;justify-content:center;gap:2px;min-width:48px;height:34px;padding:0 7px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--text);font-size:14px;font-weight:800;font-variant-numeric:tabular-nums;box-shadow:none;white-space:nowrap}
+.pct-display>span:first-of-type{font-size:10px;color:var(--muted);font-weight:650}
+.pct-caret{display:none!important}
+.pct-wheel-popover{display:none;position:absolute;right:0;bottom:calc(100% + 7px);z-index:999;width:58px;padding:4px;border:1px solid var(--line);border-radius:13px;background:var(--panel);box-shadow:0 8px 24px #0003}
+.pct-wheel-popover.is-open{display:block}
+.pct-wheel{position:relative;width:100%!important;height:110px!important;flex:0 0 auto!important;overflow-x:hidden!important;overflow-y:auto!important;touch-action:pan-y!important;overscroll-behavior:contain;scroll-snap-type:y mandatory;scrollbar-width:none;border:0!important;box-shadow:none!important;background:transparent!important;-webkit-overflow-scrolling:touch}
+.pct-wheel::-webkit-scrollbar{display:none}
+.pct-wheel:before{content:"";position:absolute;z-index:2;pointer-events:none;left:3px;right:3px;top:43px;height:22px;border-radius:7px;background:linear-gradient(100deg,#e947c21b,#9655f51b)}
+.pct-wheel .wheel-track{display:flex;flex-direction:column;width:100%;padding:44px 0;box-sizing:border-box;transform:none!important;transition:none!important}
+.pct-wheel .wheel-row{height:22px;min-height:22px;display:flex;align-items:center;justify-content:center;gap:2px;position:relative;line-height:1;flex:0 0 22px;scroll-snap-align:center;color:var(--muted);opacity:.55;font-size:11px}
+.pct-wheel .wheel-row strong{font-size:11px;font-weight:600}
+.pct-wheel .wheel-row span{font-size:8px}
+.pct-wheel .wheel-row.wheel-current{color:var(--text);opacity:1;font-size:15px;font-weight:850}
+.pct-wheel .wheel-row.wheel-current strong{font-size:15px;font-weight:850}
+.pct-wheel .wheel-row.wheel-current span{font-size:9px;color:var(--muted)}
+#allocations .item,#advanceAllocations .item{position:relative;overflow:visible;padding:9px 0!important}
+#allocations .itemtop,#advanceAllocations .itemtop{gap:8px}
+#allocations .subrow,#advanceAllocations .subrow{gap:9px;margin-top:7px;align-items:center}
+#allocations .amount,#advanceAllocations .amount{font-size:14px}
+#allocations .name-input,#advanceAllocations .name-input{font-size:12px;padding:6px 7px}
+#allocations .bar,#advanceAllocations .bar{height:5px}
+#allocations .remove-item,#advanceAllocations .remove-item{padding:5px 7px}
+#allocations,#advanceAllocations{overflow:visible}
+@media(max-width:600px){
+ .pct-display{min-width:45px;height:32px;font-size:13px;padding:0 6px}
+ .pct-wheel-popover{width:54px}
+ #allocations .item,#advanceAllocations .item{padding:8px 0!important}
+ #allocations .amount,#advanceAllocations .amount{font-size:13px}
+ #allocations .name-input,#advanceAllocations .name-input{font-size:12px}
+}
+
 </style>
 </head>
 <body>
