@@ -432,6 +432,55 @@ body.dark-theme .tab{color:#b6b1c2}
 body.dark-theme .warning{color:#ffadb5}
 body.dark-theme .total .label{color:#ded7e8}
 
+
+/* Light theme: restore contrast in collapsible cards and category editor */
+body:not(.dark-theme) .income-collapse,
+body:not(.dark-theme) .allocation-collapse{
+  background:#fff;border-color:#e7e4ec;color:#28232e;
+}
+body:not(.dark-theme) .income-toggle,
+body:not(.dark-theme) .allocation-toggle{
+  background:linear-gradient(100deg,#faf8fc,#fff);
+  color:#28232e;
+}
+body:not(.dark-theme) .income-toggle span:first-child,
+body:not(.dark-theme) .allocation-toggle>span:first-child,
+body:not(.dark-theme) .section-toggle,
+body:not(.dark-theme) .section-title{
+  color:#28232e;
+}
+body:not(.dark-theme) .allocation-toggle-meta,
+body:not(.dark-theme) .section-hint{
+  color:#777481;
+}
+body:not(.dark-theme) .income-content,
+body:not(.dark-theme) .allocation-content{
+  color:#28232e;background:#fff;
+}
+body:not(.dark-theme) .allocation-content .item{
+  border-bottom-color:#efedf2;
+}
+body:not(.dark-theme) .allocation-content .name-input{
+  background:#f8f7fa;border-color:#e7e3ec;color:#28232e;
+}
+body:not(.dark-theme) .allocation-content .name-input:hover,
+body:not(.dark-theme) .allocation-content .name-input:focus{
+  background:#fff;border-color:#c14bda;
+}
+body:not(.dark-theme) .allocation-content .amount{color:#24202b}
+body:not(.dark-theme) .allocation-content .pct{color:#777481}
+body:not(.dark-theme) .allocation-content .pct input{
+  background:#faf9fc;border-color:#e9e4ee;color:#28232e;
+}
+body:not(.dark-theme) .toggle-icon{
+  border-color:#e2dce9;background:#fff;
+}
+body:not(.dark-theme) .toggle-icon:before{border-color:#777481}
+body:not(.dark-theme) .income-collapse[open] .income-toggle,
+body:not(.dark-theme) .allocation-collapse[open] .allocation-toggle{
+  border-bottom-color:#e7e4ec;
+}
+
 </style>
 </head>
 <body>
