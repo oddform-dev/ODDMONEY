@@ -1077,6 +1077,43 @@ body.dark-theme .alloc-head .sum-pct b{
   }
 }
 
+
+/* Make save actions easy to reach after editing income and categories */
+#salaryIncomeDetails .income-content > .actions,
+#advanceView .panel:first-of-type > .actions{
+  position:sticky;
+  bottom:8px;
+  z-index:5;
+  padding:9px;
+  margin:14px -4px 0 !important;
+  background:color-mix(in srgb,var(--panel) 92%,transparent);
+  border:1px solid var(--line);
+  border-radius:13px;
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+#salaryIncomeDetails .income-content > .actions .primary,
+#advanceView .panel:first-of-type > .actions .primary{
+  min-height:42px;
+  box-shadow:0 4px 12px #c44be51f;
+}
+@media(max-width:780px){
+  #salaryIncomeDetails .income-content > .actions,
+  #advanceView .panel:first-of-type > .actions{
+    position:sticky;
+    bottom:8px;
+    display:flex;
+    gap:8px;
+    padding:8px;
+    margin:12px -2px 0 !important;
+  }
+  #salaryIncomeDetails .income-content > .actions .primary,
+  #advanceView .panel:first-of-type > .actions .primary{
+    flex:1 1 auto;
+    min-width:0;
+  }
+}
+
 </style>
 </head>
 <body>
