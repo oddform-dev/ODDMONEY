@@ -111,7 +111,7 @@ button:disabled{cursor:not-allowed;filter:grayscale(.2)}
  .goal-grid{gap:8px}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
-.collapsible{padding:0;overflow:hidden}
+.allocation-collapse{margin:0 0 14px;border:1px solid #293540;border-radius:14px;background:#0f151b;overflow:hidden}.allocation-toggle{list-style:none;display:flex;align-items:center;gap:10px;padding:12px 13px;cursor:pointer;user-select:none}.allocation-toggle::-webkit-details-marker{display:none}.allocation-toggle>span:first-child{font-size:12px;font-weight:750}.allocation-toggle-meta{margin-left:auto;color:var(--muted);font-size:10px;text-align:right}.allocation-collapse[open] .allocation-toggle{border-bottom:1px solid var(--line)}.allocation-content{padding:0 13px 13px}.allocation-content .item:first-child{padding-top:8px}.allocation-content .actions{margin-top:12px}.allocation-toggle .toggle-icon{width:25px;height:25px;flex-basis:25px}.allocation-collapse:not([open]) .allocation-toggle{border-bottom:0}@media(max-width:780px){.allocation-toggle{padding:11px}.allocation-toggle-meta{max-width:130px}.allocation-content{padding:0 10px 10px}}.collapsible{padding:0;overflow:hidden}
 .section-toggle{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:19px 22px;cursor:pointer;user-select:none}
 .section-toggle::-webkit-details-marker{display:none}
 .section-toggle>span:first-child{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:2px 10px;min-width:0}
@@ -157,7 +157,7 @@ button:disabled{cursor:not-allowed;filter:grayscale(.2)}
       <div class="total" id="totalBox"><div class="label">Остаток после обязательных платежей</div><strong id="remaining">73 000 ₽</strong></div>
       <div class="alloc-head"><h2>Распределение по категориям</h2><div class="sum-pct">Всего: <b id="pctTotal">100%</b></div></div>
       <div class="donut-wrap"><div class="donut" id="salaryDonut" role="img" aria-label="Диаграмма распределения зарплаты"></div><div class="donut-legend" id="salaryLegend"></div></div>
-      <div id="allocations"></div><div class="actions"><button id="addCategoryBtn" class="ghost" type="button">＋ Добавить категорию</button><button id="balanceCategoriesBtn" class="ghost" type="button">Распределить поровну</button></div>
+      <details class="allocation-collapse" id="salaryAccounts"><summary class="allocation-toggle"><span>Счета и категории</span><span class="allocation-toggle-meta">Настроить названия и проценты</span><span class="toggle-icon" aria-hidden="true"></span></summary><div class="allocation-content"><div id="allocations"></div><div class="actions"><button id="addCategoryBtn" class="ghost" type="button">＋ Добавить категорию</button><button id="balanceCategoriesBtn" class="ghost" type="button">Распределить поровну</button></div></div></details>
       <div class="summary"><div><div class="label">Обязательные платежи</div><div style="font-size:11px;color:var(--muted)">Кредит + ипотека + прочее</div></div><strong id="fixedTotal">7 000 ₽</strong></div>
       <div class="summary"><div><div class="label">Проверка суммы</div><div style="font-size:11px;color:var(--muted)" id="checkText">Всё распределено</div></div><strong id="checkAmount">73 000 ₽</strong></div>
       <div class="actions"><button id="copyBtn">Скопировать план</button><button id="csvBtn" class="ghost">Экспорт истории CSV</button></div>
