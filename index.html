@@ -683,6 +683,72 @@ body:not(.dark-theme) #advanceView .total{
 #totalBox.negative:before,
 #advanceView .total.negative:before{background:linear-gradient(135deg,#f26b82,#ad3d72)}
 
+
+/* Final balance-card alignment: light surfaces in light mode, dark surfaces in dark mode */
+#totalBox,
+#advanceView .total{
+  min-height:116px !important;
+  height:116px;
+  padding:23px 22px !important;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:9px;
+  border-radius:18px !important;
+  box-sizing:border-box;
+}
+#totalBox .label,
+#advanceView .total .label{
+  font-size:10px !important;
+  line-height:1.35 !important;
+  letter-spacing:.09em !important;
+  font-weight:800 !important;
+  margin:0 !important;
+}
+#totalBox strong,
+#advanceView .total strong{
+  display:block;
+  font-size:clamp(34px,3.5vw,42px) !important;
+  line-height:1 !important;
+  letter-spacing:-.065em !important;
+  font-weight:850 !important;
+  margin:0 !important;
+}
+body:not(.dark-theme) #totalBox,
+body:not(.dark-theme) #advanceView .total{
+  background:linear-gradient(115deg,#ffffff 0%,#fbf8ff 72%,#f5eaff 100%) !important;
+  color:#211b2b !important;
+  border:1px solid #e9e1f0 !important;
+  box-shadow:0 8px 24px #26182f0d !important;
+}
+body:not(.dark-theme) #totalBox .label,
+body:not(.dark-theme) #advanceView .total .label{color:#777081 !important}
+body:not(.dark-theme) #totalBox strong,
+body:not(.dark-theme) #advanceView .total strong{color:#211b2b !important}
+body:not(.dark-theme) #totalBox:before,
+body:not(.dark-theme) #advanceView .total:before{
+  width:165px;height:165px;right:-24px;top:-35px;opacity:.22;
+}
+body:not(.dark-theme) #totalBox:after,
+body:not(.dark-theme) #advanceView .total:after{
+  width:72px;height:72px;right:28px;top:22px;background:#b66be81a;
+}
+body.dark-theme #totalBox,
+body.dark-theme #advanceView .total{
+  background:linear-gradient(115deg,#211b2b 0%,#211b2b 72%,#39223d 100%) !important;
+  color:#fff !important;border:1px solid #3b3348 !important;box-shadow:none !important;
+}
+body.dark-theme #totalBox .label,
+body.dark-theme #advanceView .total .label{color:#e0d6e7 !important}
+body.dark-theme #totalBox strong,
+body.dark-theme #advanceView .total strong{color:#fff !important}
+body.dark-theme #totalBox:before,
+body.dark-theme #advanceView .total:before{opacity:.95}
+@media(max-width:700px){
+ #totalBox,#advanceView .total{height:110px;min-height:110px;padding:20px 18px !important}
+ #totalBox strong,#advanceView .total strong{font-size:36px !important}
+}
+
 </style>
 </head>
 <body>
@@ -730,21 +796,21 @@ body:not(.dark-theme) #advanceView .total{
   <div class="view" id="advanceView" hidden>
     <div class="layout">
       <section class="panel">
-        <h2>01 / Аванс</h2>
+        <h2>01 / Дополнительный доход</h2>
         <div class="field"><label for="advanceAmount">Сумма, ₽</label><input id="advanceAmount" class="money-input" type="number" min="0" step="100" value="25000"></div>
         <div class="smallnote">Введи сумму дополнительного дохода. Его распределение настраивается отдельно от основного дохода и использует собственные категории.</div>
-        <div class="actions"><button class="primary" id="saveAdvanceBtn">Сохранить аванс</button><button class="ghost" id="resetAdvanceBtn">Вернуть стартовые настройки</button></div>
+        <div class="actions"><button class="primary" id="saveAdvanceBtn">Сохранить доход</button><button class="ghost" id="resetAdvanceBtn">Вернуть стартовые категории</button></div>
         <div class="warning" id="advanceWarning"></div>
       </section>
       <section class="panel">
-        <h2>02 / Распределение аванса</h2>
-        <div class="total"><div class="label">Весь аванс к распределению</div><strong id="advanceRemaining">25 000 ₽</strong></div>
+        <h2>02 / Распределение дополнительного дохода</h2>
+        <div class="total"><div class="label">Весь дополнительный доход к распределению</div><strong id="advanceRemaining">25 000 ₽</strong></div>
         <div class="alloc-head"><h2>Распределение по категориям</h2><div class="sum-pct">Всего: <b id="advancePctTotal">100%</b></div></div>
         <div class="donut-wrap"><div class="donut" id="advanceDonut" role="img" aria-label="Диаграмма распределения аванса"></div><div class="donut-legend" id="advanceLegend"></div></div>
         <details class="allocation-collapse" id="advanceAccounts"><summary class="allocation-toggle"><span>Счета и категории</span><span class="allocation-toggle-meta">Настроить названия и проценты</span><span class="toggle-icon" aria-hidden="true"></span></summary><div class="allocation-content"><div id="advanceAllocations"></div><div class="actions"><button id="addAdvanceCategoryBtn" class="ghost" type="button">＋ Добавить категорию</button><button id="balanceAdvanceCategoriesBtn" class="ghost" type="button">Распределить поровну</button></div></div></details>
         <div class="summary"><div><div class="label">Останется нераспределённым</div><div style="font-size:11px;color:var(--muted)">Если проценты не составляют 100%</div></div><strong id="advanceUnallocated">0 ₽</strong></div>
         <details class="income-collapse" id="advanceHistoryDetails"><summary class="income-toggle"><span>История авансов</span><span class="allocation-toggle-meta">Сохранённые распределения</span><span class="toggle-icon" aria-hidden="true"></span></summary><div class="income-content"><div class="actions" style="margin-top:12px"><button class="ghost" id="clearAdvanceHistory" style="padding:6px 9px;font-size:12px">Очистить историю</button></div><div id="advanceHistoryList" class="history-empty">Пока нет сохранённых авансов.</div></div></details>
-        <div class="actions"><button id="copyAdvanceBtn">Скопировать план аванса</button></div>
+        <div class="actions"><button id="copyAdvanceBtn">Скопировать план дохода</button></div>
       </section>
     </div>
   </div>
