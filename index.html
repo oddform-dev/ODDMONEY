@@ -1223,21 +1223,40 @@ body.dark-theme #salaryView .history-row,body.dark-theme #advanceView .history-r
 
 
 
-/* Smooth five-row wheel with a centered selection */
-.pct-wheel{height:110px!important;overflow:hidden;touch-action:none!important;overscroll-behavior:contain}
+
+/* Compact percentage control; open the wheel only on demand */
+.pct-control{position:relative;flex:0 0 auto;display:flex;align-items:center;justify-content:center}
+.pct-display{display:flex;align-items:center;justify-content:center;gap:2px;min-width:48px;height:34px;padding:0 7px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--text);font-size:14px;font-weight:800;font-variant-numeric:tabular-nums;box-shadow:none}
+.pct-display>span:first-of-type{font-size:10px;color:var(--muted);font-weight:650}
+.pct-caret{display:none!important}
+.pct-wheel-popover{display:none;position:absolute;right:0;bottom:calc(100% + 7px);z-index:100;width:54px;padding:4px;border:1px solid var(--line);border-radius:13px;background:var(--panel);box-shadow:0 8px 24px #0002}
+.pct-wheel-popover.is-open{display:block}
+.pct-wheel{width:100%!important;height:110px!important;flex:0 0 auto!important;overflow:hidden;touch-action:none!important;overscroll-behavior:contain;border:0!important;box-shadow:none!important;background:transparent!important}
 .pct-wheel:before{top:43px!important;height:22px!important}
-.wheel-track{display:flex;flex-direction:column;width:100%;will-change:transform;transform:translateY(0);transition:transform 170ms cubic-bezier(.2,.75,.25,1)}
-.wheel-row{height:22px;min-height:22px;display:flex;align-items:center;justify-content:center;position:relative;line-height:1;flex:0 0 22px}
-.wheel-neighbor{font-size:11px;color:var(--muted);opacity:.42}
-.wheel-current{gap:2px;font-size:16px;font-weight:850;font-variant-numeric:tabular-nums}
-.wheel-current strong{font-size:16px;font-weight:850}
-.wheel-current span{font-size:9px;color:var(--muted)}
+.pct-wheel .wheel-track{display:flex;flex-direction:column;width:100%;will-change:transform;transform:translateY(0);transition:transform 170ms cubic-bezier(.2,.75,.25,1)}
+.pct-wheel .wheel-row{height:22px;min-height:22px;display:flex;align-items:center;justify-content:center;position:relative;line-height:1;flex:0 0 22px}
+.pct-wheel .wheel-neighbor{font-size:11px;color:var(--muted);opacity:.42}
+.pct-wheel .wheel-current{gap:2px;font-size:15px;font-weight:850;font-variant-numeric:tabular-nums}
+.pct-wheel .wheel-current strong{font-size:15px;font-weight:850}
+.pct-wheel .wheel-current span{font-size:9px;color:var(--muted)}
 .pct-wheel.is-dragging .wheel-row{transition:none}
+#allocations .item,#advanceAllocations .item{overflow:visible}
+#allocations .subrow,#advanceAllocations .subrow{gap:9px}
+#allocations .item,#advanceAllocations .item{padding:10px 0!important}
+#allocations .itemtop,#advanceAllocations .itemtop{gap:8px}
+#allocations .amount,#advanceAllocations .amount{font-size:15px}
+#allocations .name-input,#advanceAllocations .name-input{font-size:13px;padding:6px 7px}
+#allocations .subrow,#advanceAllocations .subrow{margin-top:7px}
+#allocations .bar,#advanceAllocations .bar{height:5px}
+#allocations .remove-item,#advanceAllocations .remove-item{padding:5px 7px}
+.allocation-collapse[open],.allocation-content{overflow:visible!important}
 @media(max-width:600px){
- .pct-wheel{height:110px!important;width:52px;flex-basis:52px}
- .pct-wheel:before{top:43px!important;height:22px!important}
+ .pct-display{min-width:45px;height:32px;font-size:13px;padding:0 6px}
+ .pct-wheel-popover{width:52px}
+ #allocations .item,#advanceAllocations .item{padding:9px 0!important}
+ #allocations .amount,#advanceAllocations .amount{font-size:13px}
+ #allocations .name-input,#advanceAllocations .name-input{font-size:12px}
 }
-@media(prefers-reduced-motion:reduce){.wheel-track{transition:none!important}}
 
 /* Truly compact collapsed utility sections */
 details.panel.collapsible:not([open]){
@@ -1672,15 +1691,23 @@ function enableCategorySwipe(containerId, mode){
 enableCategorySwipe('allocations','salary');
 enableCategorySwipe('advanceAllocations','advance');
 
+let openPercentWheel = null;
 function percentWheel(id,value,mode,name){
  const p=Math.max(0,Math.min(100,Number(value)||0));
+ const key=mode+':'+id;
  const rows=[-2,-1,0,1,2].map(offset=>{
    const n=p+offset,shown=n>=0&&n<=100?n:'';
    return offset===0
      ? `<div class="wheel-row wheel-current"><strong>${p}</strong><span>%</span></div>`
      : `<div class="wheel-row wheel-neighbor">${shown}</div>`;
  }).join('');
- return `<div class="pct-wheel" data-wheel-id="${id}" data-wheel-mode="${mode}" role="spinbutton" tabindex="0" aria-label="Процент ${escapeHtml(name)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${p}"><div class="wheel-track">${rows}</div></div>`;
+ const open=openPercentWheel===key;
+ return `<div class="pct-control" data-percent-key="${key}">
+   <button type="button" class="pct-display" data-percent-toggle="${key}" aria-expanded="${open}" aria-label="Изменить процент ${escapeHtml(name)}">${p}<span>%</span><span class="pct-caret">⌃</span></button>
+   <div class="pct-wheel-popover${open?' is-open':''}">
+    <div class="pct-wheel" data-wheel-id="${id}" data-wheel-mode="${mode}" role="spinbutton" tabindex="0" aria-label="Процент ${escapeHtml(name)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${p}"><div class="wheel-track">${rows}</div></div>
+   </div>
+ </div>`;
 }
 function setWheelPercent(mode,id,delta){
  const list=mode==='salary'?state.allocations:advanceAllocations;
@@ -1690,6 +1717,21 @@ function setWheelPercent(mode,id,delta){
  if(mode==='salary'){persist();render()}else{persistAdvance();renderAdvance()}
 }
 function enablePercentWheel(containerId){
+ const container=$(containerId);
+ if(!container)return;
+ container.addEventListener('click',e=>{
+   const toggle=e.target.closest('[data-percent-toggle]');
+   if(toggle){
+     const key=toggle.dataset.percentToggle;
+     openPercentWheel=openPercentWheel===key?null:key;
+     if(containerId==='allocations')render();else renderAdvance();
+     return;
+   }
+   if(openPercentWheel&&!e.target.closest('.pct-control')){
+     openPercentWheel=null;
+     if(containerId==='allocations')render();else renderAdvance();
+   }
+ });
  const container=$(containerId);
  if(!container)return;
  let active=null,startY=0,lastY=0,startTime=0,dragging=false;
