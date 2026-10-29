@@ -1718,7 +1718,7 @@ function enableCategorySwipe(containerId, mode){
 enableCategorySwipe('allocations','salary');
 enableCategorySwipe('advanceAllocations','advance');
 
-let openPercentWheel = null;
+var openPercentWheel = null;
 function percentWheel(id,value,mode,name){
  const p=Math.max(0,Math.min(100,Number(value)||0));
  const key=mode+':'+id;
